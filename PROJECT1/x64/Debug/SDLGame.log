@@ -1,0 +1,48 @@
+﻿  Graphics.cpp
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(51,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(52,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(53,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(54,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(69,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(70,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(71,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(72,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,99): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,85): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(96,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(97,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  EventHandler.cpp
+  GameplayManager.cpp
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Gameplay\GameplayManager.cpp(17,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Gameplay\GameplayManager.cpp(84,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Gameplay\GameplayManager.cpp(84,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  main.cpp
+  ColourBlock.cpp
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Objects\ColourBlock.cpp(27,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Objects\ColourBlock.cpp(28,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+Graphics.obj : error LNK2019: unresolved external symbol SDL_FreeSurface referenced in function "public: static void __cdecl Graphics::DrawText(char const *,float,float,int,int)" (?DrawText@Graphics@@SAXPEBDMMHH@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "public: static bool __cdecl Graphics::Init(void)" (?Init@Graphics@@SA_NXZ)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_CreateRenderer referenced in function "public: static bool __cdecl Graphics::Init(void)" (?Init@Graphics@@SA_NXZ)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_CreateTextureFromSurface referenced in function "public: static void __cdecl Graphics::DrawText(char const *,float,float,int,int)" (?DrawText@Graphics@@SAXPEBDMMHH@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_SetRenderDrawColor referenced in function "public: static void __cdecl Graphics::SetColor(struct Colour)" (?SetColor@Graphics@@SAXUColour@@@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_RenderClear referenced in function "public: static void __cdecl Graphics::StartRender(void)" (?StartRender@Graphics@@SAXXZ)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_RenderDrawLine referenced in function "public: static void __cdecl Graphics::DrawLine(struct Transform2D,struct Vec2D)" (?DrawLine@Graphics@@SAXUTransform2D@@UVec2D@@@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_RenderDrawRect referenced in function "public: static void __cdecl Graphics::DrawRect(struct Transform2D,struct Vec2D,bool)" (?DrawRect@Graphics@@SAXUTransform2D@@UVec2D@@_N@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_RenderFillRect referenced in function "public: static void __cdecl Graphics::DrawRect(struct Transform2D,struct Vec2D,bool)" (?DrawRect@Graphics@@SAXUTransform2D@@UVec2D@@_N@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_RenderCopy referenced in function "public: static void __cdecl Graphics::DrawText(char const *,float,float,int,int)" (?DrawText@Graphics@@SAXPEBDMMHH@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_RenderPresent referenced in function "public: static void __cdecl Graphics::EndRender(void)" (?EndRender@Graphics@@SAXXZ)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_DestroyTexture referenced in function "public: static void __cdecl Graphics::DrawText(char const *,float,float,int,int)" (?DrawText@Graphics@@SAXPEBDMMHH@Z)
+Graphics.obj : error LNK2019: unresolved external symbol SDL_Delay referenced in function "public: static void __cdecl Graphics::EndRender(void)" (?EndRender@Graphics@@SAXXZ)
+main.obj : error LNK2001: unresolved external symbol SDL_Delay
+Graphics.obj : error LNK2019: unresolved external symbol TTF_Init referenced in function "public: static bool __cdecl Graphics::Init(void)" (?Init@Graphics@@SA_NXZ)
+Graphics.obj : error LNK2019: unresolved external symbol TTF_OpenFont referenced in function "public: static void __cdecl Graphics::DrawText(char const *,float,float,int,int)" (?DrawText@Graphics@@SAXPEBDMMHH@Z)
+Graphics.obj : error LNK2019: unresolved external symbol TTF_RenderText_Solid referenced in function "public: static void __cdecl Graphics::DrawText(char const *,float,float,int,int)" (?DrawText@Graphics@@SAXPEBDMMHH@Z)
+EventHandler.obj : error LNK2019: unresolved external symbol SDL_PollEvent referenced in function "public: static bool __cdecl EventHandler::Update(void)" (?Update@EventHandler@@SA_NXZ)
+main.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in function SDL_main
+MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
+SDL2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+SDL2main.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\x64\Debug\PARTNER PROJECT 1.exe : fatal error LNK1120: 19 unresolved externals
