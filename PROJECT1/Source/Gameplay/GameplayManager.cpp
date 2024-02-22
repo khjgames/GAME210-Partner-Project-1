@@ -7,7 +7,10 @@
 
 void GameplayManager::Init(){
 	srand(time(NULL));
-}
+} 
+// 11x4 space invaders
+// + 1 ship
+// + 1 ufo
 
 void GameplayManager::Update(){
 	// update states of all game objects
