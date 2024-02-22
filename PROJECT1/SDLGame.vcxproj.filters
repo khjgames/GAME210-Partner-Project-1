@@ -24,7 +24,7 @@
     <Filter Include="Source Files\Drawn_Sprite">
       <UniqueIdentifier>{cf725f52-faba-4164-b5b9-182f00043e5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Invader">
+    <Filter Include="Source Files\GameObject">
       <UniqueIdentifier>{2b45cd47-a27e-4926-a14e-c4ca91803020}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -44,8 +44,8 @@
     <ClCompile Include="Source\Gameplay\GameplayManager.cpp">
       <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="Invader.cpp">
-      <Filter>Source Files\Invader</Filter>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Drawn_Sprite.cpp">
       <Filter>Source Files\Drawn_Sprite</Filter>
@@ -67,8 +67,8 @@
     <ClInclude Include="Source\Gameplay\GameplayManager.h">
       <Filter>Source Files\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Invader.h">
-      <Filter>Source Files\Invader</Filter>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Drawn_Sprite.h">
       <Filter>Source Files\Drawn_Sprite</Filter>

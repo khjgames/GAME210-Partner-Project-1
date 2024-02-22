@@ -1,5 +1,5 @@
 #pragma once
-class Invader {
+class GameObject {
 public:
 
 private:
