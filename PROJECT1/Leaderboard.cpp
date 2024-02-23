@@ -24,8 +24,7 @@ Leaderboard::Leaderboard(const char* fn)
 	}
 	else
 	{
-		// the format for leaderboard entries when they are saved is NAME1?SCORE1@NAME2?SCORE2...
-		// ? and @ are used due to their ascii value being convinent for verifying valid input
+		// the format for leaderboard entries when they are saved is NAME1_SCORE1;NAME2_SCORE2...
 
 		bool onName = true;						// for tracking if currently reading a name
 		short index = 0;						// current entry being writen to
@@ -38,7 +37,7 @@ Leaderboard::Leaderboard(const char* fn)
 			char currLetter = input.get();
 
 			// check if end of name entry
-			if (currLetter == '?')
+			if (currLetter == NAME_TERMINATE)
 			{
 				// add terminating char to name
 				Entries[index].name[letTrack] = '\0';
@@ -48,7 +47,7 @@ Leaderboard::Leaderboard(const char* fn)
 				currLetter = input.get();
 			}
 			// check if end of score entry
-			else if (currLetter == '@')
+			else if (currLetter == SCORE_TERMINATE)
 			{
 				// add \0 to the end of numAscii
 				numAscii[letTrack] = '\0';
@@ -120,6 +119,35 @@ LBEntry Leaderboard::GetEntry(int index)
 	return Entries[index];
 }
 
+void Leaderboard::AddEntry(const char* name, int score)
+{
+	// compare the score passed in to the entries in the leaderboard from bottom to top
+	int placement = MAX_ENTRIES;
+	while (Entries[placement - 1].score < score && placement != 0) { placement--; }
+
+	// check that the score should be added into the leaderboard
+	if (placement != MAX_ENTRIES)
+	{
+		// move other entries down to make room for the new entry
+		for (int i = MAX_ENTRIES - 2; i >= placement; i--)
+		{
+			Entries[i + 1] = Entries[i];
+		}
+
+		// insert name into the new entry
+		int c = 0;
+		while (name[c] != '\0' && c < MAX_NAME_SIZE)
+		{
+			Entries[placement].name[c] = name[c];
+			c++;
+		}
+		Entries[placement].name[c] = '\0';
+
+		// insert score into new entry
+		Entries[placement].score = score;
+	}
+}
+
 bool Leaderboard::IsWorthy(int score)
 {
 	// compare the value passed in to see if it's in the top scores
@@ -149,18 +177,19 @@ void Leaderboard::Save()
 				output << Entries[i].name[let];
 			}
 
-			// add a '?'
-			output << '?';
+			// add a name terminator
+			output << NAME_TERMINATE;
 
 			// copy over the score
 			char temp[MAX_SCORE_SIZE] = "";
 			_itoa_s(Entries[i].score, temp, 10);
 			output << temp;
 
-			// add a '@'
-			output << '@';
+			// add a score terminator
+			output << SCORE_TERMINATE;
 		}
 	}
+	output.close();
 }
 
 void Leaderboard::FillDefault()
