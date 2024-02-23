@@ -21,6 +21,9 @@
     <Filter Include="Source Files\Gameplay">
       <UniqueIdentifier>{b0e6aa60-fd50-44b0-9da3-88667ea48dcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Leaderboard">
+      <UniqueIdentifier>{d05ad78c-cc38-42ae-8ef0-595dd729e37a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -38,6 +41,9 @@
     <ClCompile Include="Source\Gameplay\GameplayManager.cpp">
       <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Leaderboard.cpp">
+      <Filter>Source Files\Leaderboard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Objects\ColourBlock.h">
@@ -54,6 +60,9 @@
     </ClInclude>
     <ClInclude Include="Source\Gameplay\GameplayManager.h">
       <Filter>Source Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaderboard.h">
+      <Filter>Source Files\Leaderboard</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
