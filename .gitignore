@@ -4,3 +4,7 @@
 Debug/
 
 PROJECT1/x64/
+
+*.dll
+
+*.lib

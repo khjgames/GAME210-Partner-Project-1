@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Leaderboard.cpp" />
     <ClCompile Include="Source\EventHandler.cpp" />
     <ClCompile Include="Source\Gameplay\GameplayManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
@@ -30,6 +31,7 @@
   <ItemGroup>
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Leaderboard.h" />
     <ClInclude Include="Source\EventHandler.h" />
     <ClInclude Include="Source\Gameplay\GameplayManager.h" />
     <ClInclude Include="Source\Objects\ObjData.h" />

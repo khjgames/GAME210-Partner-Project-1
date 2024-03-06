@@ -15,7 +15,8 @@ GameObject* GameplayManager::AddGameObject(short x, short y, short type, bool vi
 
 void GameplayManager::DeleteGameObjects(){
 	GameObject* CurGameObject = FirstGameObject;
-	while (true) { // Delete all GameObjects from first to last
+	while (true) { // Delete all GameObjects from first to last 
+		if (CurGameObject == nullptr) break;
 		GameObject* NextGameObject = CurGameObject->GetNext();
 		delete CurGameObject; 
 		if (NextGameObject == nullptr) break; // we reached the last object
