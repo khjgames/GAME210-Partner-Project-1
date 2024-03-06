@@ -30,6 +30,12 @@
     <Filter Include="Source Files\GameObjectDrawer">
       <UniqueIdentifier>{c2451d0b-4bab-45b7-a5c4-fbab6c7f9e90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameSprites">
+      <UniqueIdentifier>{956c3888-2c9a-4ea8-9e7c-09dc5bed4e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSprite">
+      <UniqueIdentifier>{8622f895-a245-49a5-a331-920a9e1f934a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -56,6 +62,12 @@
     <ClCompile Include="GameObjectDrawer.cpp">
       <Filter>Source Files\GameObjectDrawer</Filter>
     </ClCompile>
+    <ClCompile Include="GameSprites.cpp">
+      <Filter>Source Files\GameSprites</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSprite.cpp">
+      <Filter>Source Files\GameSprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Objects\ColourBlock.h">
@@ -81,6 +93,12 @@
     </ClInclude>
     <ClInclude Include="GameObjectDrawer.h">
       <Filter>Source Files\GameObjectDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSprites.h">
+      <Filter>Source Files\GameSprites</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSprite.h">
+      <Filter>Source Files\GameSprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

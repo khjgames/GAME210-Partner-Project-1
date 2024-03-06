@@ -1,4 +1,5 @@
 #include "GameObjectDrawer.h"
+
 void GameObjectDrawer::DrawGameObjects(GameObject* FirstGameObject){
 	GameObject* CurGameObject = FirstGameObject;
 	while (true){
@@ -6,6 +7,8 @@ void GameObjectDrawer::DrawGameObjects(GameObject* FirstGameObject){
 		GameObject* NextGameObject = CurGameObject->GetNext();
 		switch (CurGameObject->type) {
 			case GameObject::ObjectTypes::PLAYER:
+
+				//SDL_RenderCopy(renderer, sprite1, NULL, position);
 				break;
 			case GameObject::ObjectTypes::INVADER_1:
 				break;

@@ -22,5 +22,5 @@ GameObject::GameObject(short ax, short by, short ctype, bool dvisible) : x(ax), 
 } // Default Constructor
 
 GameObject::~GameObject(){
-	// delete data here
+
 } // Default Destructor
