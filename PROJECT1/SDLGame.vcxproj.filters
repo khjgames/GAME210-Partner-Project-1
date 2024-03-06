@@ -21,11 +21,11 @@
     <Filter Include="Source Files\Gameplay">
       <UniqueIdentifier>{b0e6aa60-fd50-44b0-9da3-88667ea48dcd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Drawn_Sprite">
-      <UniqueIdentifier>{cf725f52-faba-4164-b5b9-182f00043e5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\GameObject">
       <UniqueIdentifier>{2b45cd47-a27e-4926-a14e-c4ca91803020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjectDrawer">
+      <UniqueIdentifier>{c2451d0b-4bab-45b7-a5c4-fbab6c7f9e90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,8 +47,8 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Drawn_Sprite.cpp">
-      <Filter>Source Files\Drawn_Sprite</Filter>
+    <ClCompile Include="GameObjectDrawer.cpp">
+      <Filter>Source Files\GameObjectDrawer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,8 +70,8 @@
     <ClInclude Include="GameObject.h">
       <Filter>Source Files\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Drawn_Sprite.h">
-      <Filter>Source Files\Drawn_Sprite</Filter>
+    <ClInclude Include="GameObjectDrawer.h">
+      <Filter>Source Files\GameObjectDrawer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
