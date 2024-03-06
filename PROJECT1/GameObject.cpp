@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+static unsigned long long num_created = 0;
+
 GameObject* GameObject::GetNext() {
 	return next;
 }

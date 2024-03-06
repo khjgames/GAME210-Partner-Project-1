@@ -20,7 +20,6 @@ public:
 	short y;
 	short type;
 	bool visible;
-	static unsigned long long num_created;
 private:
 	GameObject* next;
 }; 

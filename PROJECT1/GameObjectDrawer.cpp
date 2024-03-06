@@ -2,6 +2,8 @@
 void GameObjectDrawer::DrawGameObjects(GameObject* FirstGameObject){
 	GameObject* CurGameObject = FirstGameObject;
 	while (true){
+		if (CurGameObject == nullptr) break;
+		GameObject* NextGameObject = CurGameObject->GetNext();
 		switch (CurGameObject->type) {
 			case GameObject::ObjectTypes::PLAYER:
 				break;
@@ -16,6 +18,7 @@ void GameObjectDrawer::DrawGameObjects(GameObject* FirstGameObject){
 			case GameObject::ObjectTypes::PLAYER_PROJECTILE:
 				break;
 		}
-		if (CurGameObject->GetNext() == nullptr) break; // we reached the last object
+		if (NextGameObject == nullptr) break; // we reached the last object
+		else CurGameObject = NextGameObject;
 	}
 }
