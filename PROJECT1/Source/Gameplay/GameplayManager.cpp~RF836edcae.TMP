@@ -5,9 +5,6 @@
 // creating a basic gameobject
 #include "../Objects/ColourBlock.h"
 #include "../GameObjectDrawer.h"
-#include "../GameTime.h"
-
-using namespace GameTime;
 
 GameObject* GameplayManager::AddGameObject(short x, short y, short type, bool visible){
 	GameObject* NextGameObject = new GameObject(x, y, type, visible);
@@ -47,10 +44,6 @@ void GameplayManager::Init(){
 	GameSprites::LoadSprites(); // I forgot to call this function and wondered why my code didn't work ;-; I'm... so. SOOOO DUMB. -kieran
 	DeleteGameObjects();
 	InitGameObjects();
-	CurSpeed = 1;
-	AccelPerWave = 1;
-	AccelLowSurvivors = 1;
-	FrameSpeedBonus = 0;
 	LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 } 
 // 11x4 space invaders
@@ -58,7 +51,7 @@ void GameplayManager::Init(){
 // + 1 ufo
 
 void GameplayManager::Update(){
-
+	// update states of all game objects
 }
 
 void GameplayManager::Render(){

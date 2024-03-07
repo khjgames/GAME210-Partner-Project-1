@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameSprites.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Leaderboard.cpp" />
@@ -29,6 +30,7 @@
     <ClCompile Include="GameObjectDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameSprites.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Leaderboard.h" />

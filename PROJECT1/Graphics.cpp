@@ -6,9 +6,6 @@ SDL_Renderer* Graphics::renderer;
 
 bool Graphics::Init()
 {
-	const int WINDOW_WIDTH = 1280;
-	const int WINDOW_HEIGHT = 720;
-
 	// create little window with minimize and x to close 
 	window = SDL_CreateWindow("Partner Project 1",
 		SDL_WINDOWPOS_UNDEFINED,

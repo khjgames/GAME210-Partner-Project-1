@@ -12,15 +12,20 @@ void GameObject::SetNext(GameObject* nx) {
 
 GameObject::GameObject(){
 	next = nullptr;	
-	x = 0; y = 0; type = 0; visible = false;
+	transform.w = 0; transform.h = 0;
+	transform.x = 0; transform.y = 0;
+	type = 0; visible = false;
 	id = num_created; num_created++;
 } // Default Constructor
 
-GameObject::GameObject(short ax, short by, short ctype, bool dvisible) : x(ax), y(by), type(ctype), visible(dvisible){
-	next = nullptr; 
+GameObject::GameObject(short ax, short by, short ctype, bool dvisible){
+	next = nullptr;
+	transform.w = 0; transform.h = 0;
+	transform.x = ax; transform.y = by;
+	type = ctype; visible = dvisible;
 	id = num_created; num_created++;
 } // Default Constructor
 
 GameObject::~GameObject(){
-	// delete data here
+
 } // Default Destructor
