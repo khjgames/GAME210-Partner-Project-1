@@ -1,27 +1,29 @@
-﻿  Graphics.cpp
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(51,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(52,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(53,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(54,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(69,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(70,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(71,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(72,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,99): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,85): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(74,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(96,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Graphics.cpp(97,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+﻿  Drawn_Sprite.cpp
+  Graphics.cpp
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(51,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(52,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(53,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(54,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(69,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(70,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(71,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(72,23): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(74,99): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(74,85): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(74,71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(74,49): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(96,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Graphics.cpp(97,19): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Invader.cpp
   EventHandler.cpp
   GameplayManager.cpp
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Gameplay\GameplayManager.cpp(17,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Gameplay\GameplayManager.cpp(84,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Gameplay\GameplayManager.cpp(84,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Source\Gameplay\GameplayManager.cpp(17,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Source\Gameplay\GameplayManager.cpp(84,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Source\Gameplay\GameplayManager.cpp(84,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   main.cpp
   ColourBlock.cpp
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Objects\ColourBlock.cpp(27,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\PROJECT1\Source\Objects\ColourBlock.cpp(28,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Source\Objects\ColourBlock.cpp(27,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\PROJECT1\Source\Objects\ColourBlock.cpp(28,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Generating Code...
 Graphics.obj : error LNK2019: unresolved external symbol SDL_FreeSurface referenced in function "public: static void __cdecl Graphics::DrawText(char const *,float,float,int,int)" (?DrawText@Graphics@@SAXPEBDMMHH@Z)
 Graphics.obj : error LNK2019: unresolved external symbol SDL_CreateWindow referenced in function "public: static bool __cdecl Graphics::Init(void)" (?Init@Graphics@@SA_NXZ)
@@ -45,4 +47,4 @@ main.obj : error LNK2019: unresolved external symbol SDL_Quit referenced in func
 MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
 SDL2.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
 SDL2main.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
-C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\ProjectBase1\x64\Debug\PARTNER PROJECT 1.exe : fatal error LNK1120: 19 unresolved externals
+C:\Users\khjga\OneDrive - St. Lawrence College\Spectrum\Semester_2\Game_210_Fundimentals_2_CPP\GAME210-Partner-Project-1\x64\Debug\PARTNER PROJECT 1.exe : fatal error LNK1120: 19 unresolved externals

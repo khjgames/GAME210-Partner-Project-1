@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
@@ -24,6 +24,15 @@
     <Filter Include="Source Files\Leaderboard">
       <UniqueIdentifier>{d05ad78c-cc38-42ae-8ef0-595dd729e37a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameObject">
+      <UniqueIdentifier>{2b45cd47-a27e-4926-a14e-c4ca91803020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObjectDrawer">
+      <UniqueIdentifier>{c2451d0b-4bab-45b7-a5c4-fbab6c7f9e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameSprites">
+      <UniqueIdentifier>{956c3888-2c9a-4ea8-9e7c-09dc5bed4e7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -44,6 +53,15 @@
     <ClCompile Include="Leaderboard.cpp">
       <Filter>Source Files\Leaderboard</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectDrawer.cpp">
+      <Filter>Source Files\GameObjectDrawer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSprites.cpp">
+      <Filter>Source Files\GameSprites</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Objects\ColourBlock.h">
@@ -63,6 +81,15 @@
     </ClInclude>
     <ClInclude Include="Leaderboard.h">
       <Filter>Source Files\Leaderboard</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Source Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectDrawer.h">
+      <Filter>Source Files\GameObjectDrawer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSprites.h">
+      <Filter>Source Files\GameSprites</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

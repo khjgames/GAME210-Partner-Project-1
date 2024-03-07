@@ -1,8 +1,14 @@
 
+.vs/
+
 Debug/
 
-.vs/PARTNER_PROJ_1/FileContentIndex/
+PROJECT1/x64/
 
-.vs/PARTNER_PROJ_1/v17/
+PROJECT1/Libraries/
 
-.vs/
+*.dll
+
+*.lib
+
+x64/

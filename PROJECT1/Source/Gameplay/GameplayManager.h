@@ -1,37 +1,31 @@
 #pragma once
 // creating a basic gameobject
 #include "../Objects/ColourBlock.h"
+#include "../GameObject.h"
 
-class GameplayManager
-{
+class GameplayManager {
 public:
 	GameplayManager() { Init(); };
 	~GameplayManager() {};
-
+	
 	void Update();
 	void Render();
+	void LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS);
+
+	int CurSpeed;
+	int AccelPerWave;
+	int AccelLowSurvivors;
+	int FrameSpeedBonus;
 
 private: 
-	void Init();
-	void SetupBoard();
-	void DrawBoard();
-	void DrawTitle();
-	void AdvanceIntroAnim();
+	void InitGameObjects();
+	void DeleteGameObjects();
 
-	static const int BOARD_ROWS = 8;
-	static const int BOARD_COLS = 8;
-	static const int BOARDSIZE = BOARD_ROWS * BOARD_COLS;
-	static const int MAX_PATTERN_SIZE = BOARDSIZE;
+	GameObject* FirstGameObject;
+	GameObject* LastGameObject;
 
-	// 2D array
-	ColourBlock ColourBlock[BOARD_ROWS][BOARD_COLS];
+	GameObject* AddGameObject(short x, short y, short type, bool visible);
 
-	int lvl = 1;
-
-	// where in the animation or entry is the current index
-	int currentPatternIndex = 0;
-	bool introAnimating = true;
-	bool isBlankFrame = true;
-	int currentPatternSize = BOARD_ROWS;
+	void Init(); 
+	void DrawScore(); 
 };
-
