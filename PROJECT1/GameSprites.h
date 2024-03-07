@@ -1,5 +1,9 @@
 #pragma once
-#include "GameSprite.h"
+#include "Graphics.h" 
+#include <SDL_image.h>
+#include <string>
+
+using namespace std;
 
 const short NUM_SPRITES = 7;
 
@@ -8,6 +12,6 @@ public:
 	GameSprites();
 	~GameSprites();
 	static int LoadSprites();
-	static int LoadSprite(char* file, SDL_Renderer* renderer, SDL_Texture*& someSprite);
+	static int LoadSprite(char* file, SDL_Texture*& someSprite);
 private:
 };

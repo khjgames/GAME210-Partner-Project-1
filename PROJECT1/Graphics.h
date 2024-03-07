@@ -18,9 +18,9 @@ public:
 	static void DrawRect(Transform2D transform, Vec2D dimensions, bool isFilled = false);
 	static void DrawLine(Transform2D transform, Vec2D dimensions);
 	static void DrawText(const char* text, float x, float y, int width, int height);
+	static SDL_Renderer* renderer;
 private:
 	// some SDL specific variables:
 	static SDL_Window* window;
-	static SDL_Renderer* renderer;
 };
 

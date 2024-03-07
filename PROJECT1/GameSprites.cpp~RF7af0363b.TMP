@@ -3,7 +3,7 @@
 int sprite_w, sprite_h;
 
 string ImagePaths[NUM_SPRITES] = { "ship.png","blue_1.png","blue_2.png","green_1.png","green_2.png","pink_1.png","ufo.png" };
-SDL_Texture* Sprites[NUM_SPRITES];
+SDL_Texture Sprites[NUM_SPRITES];
 
 GameSprites::GameSprites() {
 
@@ -16,17 +16,17 @@ GameSprites::~GameSprites(){
 int GameSprites::LoadSprites(){
 	for (int i = 0; i < NUM_SPRITES; i++) {
 		// Loads ryu.png(Left side of the screen) in sprite1 
-		char* img_path = (char*)ImagePaths[i].data();
-		if (LoadSprite(img_path, Sprites[i]) < 0) {
+		char* ImagePaths[i].c_str().data()
+		if (LoadSprite(, renderer, sprite1) < 0) {
 			return 1;
 		}
 	}
 	return 0;
 }
 
-int GameSprites::LoadSprite(char* file, SDL_Texture*& someSprite) { // pointer to the address someSprite 
+int GameSprites::LoadSprite(char* file, SDL_Renderer* renderer, SDL_Texture*& someSprite) { // pointer to the address someSprite 
 	SDL_Surface* temp;
-	
+
 	temp = IMG_Load(file);
 	if (temp == NULL) {
 		fprintf(stderr, "Couldn't load %s: %s", file, SDL_GetError());
@@ -57,13 +57,13 @@ int GameSprites::LoadSprite(char* file, SDL_Texture*& someSprite) { // pointer t
 	}
 
 	// Create textures from the image
-	someSprite = SDL_CreateTextureFromSurface(Graphics::renderer, temp);
+	someSprite = SDL_CreateTextureFromSurface(renderer, temp);
 	if (!someSprite) {
 		fprintf(stderr, "Couldn't create texture: %s\n", SDL_GetError());
 		SDL_FreeSurface(temp);
 		return (-1);
 	}
 	SDL_FreeSurface(temp);
-	
+
 	return (0);
 }
