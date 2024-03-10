@@ -6,7 +6,9 @@ void GameObjectDrawer::DrawGameObjects(GameObject* FirstGameObject){
 		if (CurGameObject == nullptr) break;
 		GameObject* NextGameObject = CurGameObject->GetNext();
 		switch (CurGameObject->type) {
-			case GameObject::ObjectTypes::PLAYER:
+			case GameObject::ObjectTypes::PLAYER_1:
+				break;
+			case GameObject::ObjectTypes::PLAYER_2:
 				break;
 			case GameObject::ObjectTypes::INVADER_1A:
 				break;
@@ -22,7 +24,9 @@ void GameObjectDrawer::DrawGameObjects(GameObject* FirstGameObject){
 				break;
 			case GameObject::ObjectTypes::UFO:
 				break;
-			case GameObject::ObjectTypes::PLAYER_PROJECTILE:
+			case GameObject::ObjectTypes::PLAYER_1_PROJECTILE:
+				break;
+			case GameObject::ObjectTypes::PLAYER_2_PROJECTILE:
 				break;
 		}
 		//

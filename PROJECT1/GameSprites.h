@@ -17,7 +17,7 @@ public:
 	~GameSprites();
 	static int LoadSprites();
 	static int LoadSprite(short i);
-	static const short NUM_SPRITES = 9;
+	static const short NUM_SPRITES = 11;
 	static string Paths[GameSprites::NUM_SPRITES];
 	static Vector2 Dimensions[GameSprites::NUM_SPRITES];
 	static SDL_Texture* Sprites[GameSprites::NUM_SPRITES];

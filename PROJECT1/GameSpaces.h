@@ -10,3 +10,8 @@ namespace GameTime {
         return std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
     }
 }
+
+namespace GameSettings {
+    int ShipSpeed = 3;
+    int ProjectileSpeed = 4;
+}

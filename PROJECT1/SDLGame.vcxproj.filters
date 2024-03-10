@@ -33,6 +33,9 @@
     <Filter Include="Source Files\GameSprites">
       <UniqueIdentifier>{956c3888-2c9a-4ea8-9e7c-09dc5bed4e7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GameSpaces">
+      <UniqueIdentifier>{8831cf6f-b335-4536-b738-7a9a5089efd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\main.cpp">
@@ -90,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="GameSprites.h">
       <Filter>Source Files\GameSprites</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSpaces.h">
+      <Filter>Source Files\GameSpaces</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

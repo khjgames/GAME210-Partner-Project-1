@@ -16,6 +16,7 @@ public:
 	int AccelPerWave;
 	int AccelLowSurvivors;
 	int FrameSpeedBonus;
+	int LastTick;
 
 private: 
 	void InitGameObjects();
@@ -26,6 +27,7 @@ private:
 
 	GameObject* AddGameObject(short x, short y, short type, bool visible);
 
+	int LastSpriteAnim;
 	void Init(); 
 	void DrawScore(); 
 };

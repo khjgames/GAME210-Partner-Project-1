@@ -9,7 +9,8 @@ public:
 	GameObject* GetNext();
 	void SetNext(GameObject* nx);
 	enum ObjectTypes {
-		PLAYER,
+		PLAYER_1,
+		PLAYER_2,
 		INVADER_1A,
 		INVADER_1B,
 		INVADER_2A,
@@ -17,7 +18,8 @@ public:
 		INVADER_3A,
 		INVADER_3B,
 		UFO,
-		PLAYER_PROJECTILE
+		PLAYER_1_PROJECTILE,
+		PLAYER_2_PROJECTILE
 	};
 	unsigned long long id;
 	SDL_Rect transform;
