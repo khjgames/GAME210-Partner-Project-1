@@ -20,7 +20,8 @@ namespace GameVars {
     short SpriteInt = 0;
     short SpriteIntMax = 200; // Sprite animation interval
     int LastTick;
-    int Score;              // Current score
+    short Level;              // Current stage / level
+    int Score;                // Current score
     short InvaderSpeed;       // Invader pixels per tick towards edge
     short DistPerAdvance;     // Pixels down to move after reach edge
     short AccelPerAdvance;    // InvaderSpeed increase after reach edge
@@ -38,6 +39,7 @@ namespace GameVars {
     const short TYPESET_SIZE = 46;
     //
     void InitGameVars() {
+        Level = 1;
         Score = 0;
         InvaderSpeed = 1;
         DistPerAdvance = 30;

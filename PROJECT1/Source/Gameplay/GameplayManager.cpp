@@ -267,8 +267,26 @@ void GameplayManager::Update(){
 		}
 		//
 	}
-	else { // You beat the current level
-	
+	else { 
+		if (AtMenu == false) { // You beat the current level
+			Level++;
+			short NumInvade = 13;
+			short NumWaves = 6 + floor(Level / 4);
+			if (Level % 2 == 0) NumInvade = 14;
+			if (Level % 4 == 1) {
+				InvaderSpeed++;
+			}
+			if (Level % 3 == 0) {
+				LowSurvivors++; NumInvade = 15;
+			}
+			if (Level % 6 == 0) {
+				AccelLowSurvivors++;
+			}
+			if (Level % 3 == 1) {
+				AccelPerAdvance += 0.5;
+			}
+			LoadLevel(52, 52, NumInvade, NumWaves); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+		}
 	}
 	// ------------ ||
 
@@ -344,4 +362,7 @@ void GameplayManager::DrawScore(){
 	// draw the score
 	string ScoreString = "Score: " + to_string(Score);
 	Graphics::DrawText(ScoreString.c_str(), 150, 20, ScoreString.size() * 20, 50, ArialFont);
+
+	string LevelString = "Level: " + to_string(Level);
+	Graphics::DrawText(LevelString.c_str(), 450, 20, LevelString.size() * 20, 50, ArialFont);
 }
