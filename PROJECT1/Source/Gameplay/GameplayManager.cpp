@@ -288,13 +288,34 @@ bool MouseInRect(int x, int y, int w, int h) {
 	return EventHandler::MouseX >= x && EventHandler::MouseX <= x + w && EventHandler::MouseY >= y && EventHandler::MouseY <= y + h;
 }
 
-void GameplayManager::DrawMenu(){
+void GameplayManager::DrawMenu() {
 	string TitleString = "Void Invaders";
 	string PlayerString = "Players: " + to_string(NumPlayers) + "P";
-	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH/2 - 17 * TitleString.size(), 34, TitleString.size() * 30, 70, ArialFont);
-	Graphics::DrawText(PlayerString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 150, PlayerString.size() * 18, 44, ArialFont);
-	if (EventHandler::MClicked(1) == true && MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 150, PlayerString.size() * 18, 44) == true){
+	string PlayerNameString = NameEntry + PlayerName + NameEdit;
+
+	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
+	Graphics::DrawText(PlayerString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 145, PlayerString.size() * 18, 44, ArialFont);
+	if (EventHandler::MClicked(1) == true && MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 145, PlayerString.size() * 18, 44) == true) {
 		ToggleNumPlayers(FirstGameObject);
+	}
+
+	Graphics::DrawText(PlayerNameString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44, ArialFont);
+	if (EventHandler::MClicked(1) == true){ 
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44) == true) {
+			NameEntry = "-> PlayerName: "; NameEdit = "_";
+		}
+		else if (NameEdit == "_") {
+			NameEntry = "PlayerName: "; NameEdit = "";
+		}
+	}
+	if (NameEdit == "_") {
+		if (EventHandler::KeyHit(GameEvents::BACKSPACE_PRESSED)) {
+			if (!PlayerName.empty()) PlayerName.pop_back();
+		}
+
+		if (EventHandler::KeyHit(GameEvents::ENTER_PRESSED)) {
+			NameEntry = "PlayerName: "; NameEdit = "";
+		}
 	}
 }
 

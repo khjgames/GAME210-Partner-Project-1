@@ -3,6 +3,7 @@
 #include <string.h>
 
 bool EventHandler::events[];
+bool EventHandler::prev_events[];
 bool EventHandler::MouseState[5] = { false, false, false, false, false };
 bool EventHandler::PrevMouseState[5] = { false, false, false, false, false };
 int EventHandler::MouseX = 0;
@@ -22,9 +23,50 @@ bool EventHandler::Update() {
 	SDL_GetMouseState(&MouseX, &MouseY);
 
 	for (int i = 0; i < 5; ++i) PrevMouseState[i] = MouseState[i];
+	for (int i = 0; i < GameEvents::NUM_GAME_EVENTS; ++i) prev_events[i] = events[i];
 
 	while (SDL_PollEvent(&currEvents)) {
 		switch (currEvents.key.keysym.sym) {
+		case SDLK_0: {
+			SetButton(GameEvents::K0_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_1: {
+			SetButton(GameEvents::K1_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_2: {
+			SetButton(GameEvents::K2_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_3: {
+			SetButton(GameEvents::K3_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_4: {
+			SetButton(GameEvents::K4_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_5: {
+			SetButton(GameEvents::K5_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_6: {
+			SetButton(GameEvents::K6_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_7: {
+			SetButton(GameEvents::K7_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_8: {
+			SetButton(GameEvents::K8_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_9: {
+			SetButton(GameEvents::K9_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
 		case SDLK_a: {
 			SetButton(GameEvents::A_PRESSED, currEvents.key.type == SDL_KEYDOWN);
 			break;
@@ -204,6 +246,16 @@ bool EventHandler::Update() {
 			SetButton(GameEvents::SPACE_PRESSED, currEvents.key.type == SDL_KEYDOWN);
 			break;
 		}
+		case SDLK_BACKSPACE:
+		{
+			SetButton(GameEvents::BACKSPACE_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
+		case SDLK_RETURN:
+		{
+			SetButton(GameEvents::ENTER_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
 		}
 		//
 		switch (currEvents.type) {
@@ -216,6 +268,10 @@ bool EventHandler::Update() {
 		}
 	}
 	return success;
+}
+
+bool EventHandler::KeyHit(short btn){
+	return events[btn] && !prev_events[btn];
 }
 
 bool EventHandler::MDown(short btn) {

@@ -2,6 +2,16 @@
 #include "SDL.h"
 
 enum GameEvents {
+	K0_PRESSED,
+	K1_PRESSED,
+	K2_PRESSED,
+	K3_PRESSED,
+	K4_PRESSED,
+	K5_PRESSED,
+	K6_PRESSED,
+	K7_PRESSED,
+	K8_PRESSED,
+	K9_PRESSED,
 	A_PRESSED, //I needed more
 	B_PRESSED, //buttons james
 	C_PRESSED, //welcome to yanderedev code
@@ -43,6 +53,8 @@ enum GameEvents {
 	KP8_PRESSED,
 	KP9_PRESSED,
 	SPACE_PRESSED,
+	BACKSPACE_PRESSED,
+	ENTER_PRESSED,
 
 	NUM_GAME_EVENTS
 };
@@ -57,13 +69,15 @@ public:
 	static bool MUp(short btn);
 	static bool MClicked(short btn);
 	static bool MReleased(short btn);
+	static bool KeyHit(short btn);
 
 	static int MouseX;
 	static int MouseY;
 
-	static const int NUM_EVENTS = 42;
+	static const int NUM_EVENTS = 54;
 
 	static bool events[GameEvents::NUM_GAME_EVENTS];
+	static bool prev_events[GameEvents::NUM_GAME_EVENTS];
 private:
 
 	static void SetButton(GameEvents eventNum, bool pressed);
