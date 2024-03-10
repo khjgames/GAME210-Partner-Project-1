@@ -42,7 +42,7 @@ void GameplayManager::InitGameObjects(){
 void GameplayManager::LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS){
 	for (int a = 0; a < (PER_ROW); a++) {
 		for (int b = 0; b < NUM_ROWS; b++) {
-			AddGameObject(Graphics::WINDOW_WIDTH / 2 - 16 - (PER_ROW / 2 - a) * X_GAP, Graphics::WINDOW_HEIGHT / 3 - ((2 - b) * Y_GAP), 2 + (b / 2 % 3 * 2), true);
+			AddGameObject(Graphics::WINDOW_WIDTH / 2 - 16 - (PER_ROW / 2 - a) * X_GAP, Graphics::WINDOW_HEIGHT / 4 - ((2 - b) * Y_GAP), 2 + (b / 2 % 3 * 2), true);
 		}
 	}
 }
@@ -53,12 +53,8 @@ void GameplayManager::Init(){
 	GameSprites::LoadSprites();
 	DeleteGameObjects();
 	InitGameObjects();
-	Score = 0;
-	InvaderSpeed = 1;
-	DistPerAdvance = 30;
-	AccelPerAdvance = 1;
-	AccelLowSurvivors = 1;
-	FrameSpeedBonus = 0;
+	InitGameVars();		// Reset and init a bunch of game vars
+
 	LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 } 
 // 11x4 space invaders
@@ -136,8 +132,10 @@ void GameplayManager::Update(){
 	GameObject* Player2 = nullptr;
 	GameObject* Player1Proj = nullptr;
 	GameObject* Player2Proj = nullptr;
-	int MinX = 9999; int MaxX = 0; int LivingInvaders = 0;
+	int MinX = 9999; int MaxX = 0; int MaxX_W = 0; int LivingInvaders = 0; bool ReachedEdge = false; int AdvanceAmount = InvaderSpeed;
 	// Get the min max positions of all invaders.
+
+	SpriteInt = (SpriteInt < SpriteIntMax) ? SpriteInt + 1 : 0;
 
 	while (true) {
 		if (CurGameObject == nullptr) break;
@@ -157,10 +155,22 @@ void GameplayManager::Update(){
 		case GameObject::ObjectTypes::INVADER_2B: // Intentional fallthrough
 		case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthrough
 		case GameObject::ObjectTypes::INVADER_3B: // Call a function for all invader cases
+			if (SpriteInt == SpriteIntMax) {
+				if (CurGameObject->type % 2 == GameObject::ObjectTypes::INVADER_1A % 2) {
+					CurGameObject->type++; // Alternate sprite (animation)
+				}
+				else {
+					CurGameObject->type--;  // Alternate sprite (animation)
+				}
+			}
 			if (CurGameObject->visible == true) {
 				HandleInvader(CurGameObject, Player1Proj, Player2Proj);
 				MinX = min(MinX, CurGameObject->transform.x);
-				MaxX = max(MaxX, CurGameObject->transform.x);
+				int TempMaxX = max(MaxX, CurGameObject->transform.x + CurGameObject->transform.w);
+				if (TempMaxX > MaxX){
+					MaxX = TempMaxX;
+					MaxX_W = CurGameObject->transform.w;
+				}
 				LivingInvaders++;
 			}
 			break;
@@ -182,14 +192,28 @@ void GameplayManager::Update(){
 
 	if (LivingInvaders > 0){
 		//
-		if (AdvancingLeft == true) {
-
-		}
-		else {
-
+		for (int i = 1; i < LowSurvivors; i++){ // Move faster the fewer survivors < LowSurvivors there are.
+			if (LivingInvaders <= i) AdvanceAmount += AccelLowSurvivors;
 		}
 		//
-		while (true) {
+		if (AdvancingLeft == true) {
+			int TempMinX = max(0, MinX - AdvanceAmount);
+			if (TempMinX == 0) { 
+				ReachedEdge = true;
+				AdvanceAmount = dif(MinX, TempMinX);
+			}
+			AdvanceAmount = -AdvanceAmount;
+		}
+		else {
+			int TempMaxX = min(Graphics::WINDOW_WIDTH, MaxX + AdvanceAmount);
+			if (TempMaxX == Graphics::WINDOW_WIDTH) {  
+				ReachedEdge = true;
+				AdvanceAmount = dif(MaxX, TempMaxX);
+			}
+		}
+		//
+		CurGameObject = FirstGameObject;
+		while (true) {			
 			if (CurGameObject == nullptr) break;
 			GameObject* NextGameObject = CurGameObject->GetNext();
 			switch (CurGameObject->type) {
@@ -200,13 +224,19 @@ void GameplayManager::Update(){
 			case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthrough
 			case GameObject::ObjectTypes::INVADER_3B: // Call a function for all invader cases
 				if (CurGameObject->visible == true) {
-					
+					CurGameObject->transform.x += AdvanceAmount;
+					if (ReachedEdge == true) CurGameObject->transform.y += DistPerAdvance;
 				}
 				break;
 			}
 			//
 			if (NextGameObject == nullptr) break; // we reached the last object
 			else CurGameObject = NextGameObject;
+		}
+		//
+		if (ReachedEdge == true) {
+			InvaderSpeed += AccelPerAdvance;
+			AdvancingLeft = !AdvancingLeft;
 		}
 		//
 	}
@@ -226,5 +256,5 @@ void GameplayManager::Render(){
 void GameplayManager::DrawScore(){
 	// draw the score
 	string ScoreString = "Score: " + to_string(Score);
-	Graphics::DrawText(ScoreString.c_str(), 150, 40, ScoreString.size() * 20, 50);
+	Graphics::DrawText(ScoreString.c_str(), 150, 20, ScoreString.size() * 20, 50);
 }

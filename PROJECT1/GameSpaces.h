@@ -12,15 +12,28 @@ namespace GameTime {
 }
 
 namespace GameVars {
+    //
     int ShipSpeed = 3;
     int ProjectileSpeed = 5;
     //
-    int Score;
-    int InvaderSpeed;
-    int DistPerAdvance;
-    int AccelPerAdvance;
-    int AccelLowSurvivors;
-    int FrameSpeedBonus;
+    int SpriteInt = 0;
+    int SpriteIntMax = 36;
     int LastTick;
-    bool AdvancingLeft = true;
+    int Score;              // Current score
+    int InvaderSpeed;       // Invader pixels per tick towards edge
+    int DistPerAdvance;     // Pixels down to move after reach edge
+    int AccelPerAdvance;    // InvaderSpeed increase after reach edge
+    int AccelLowSurvivors;  // InvaderSpeed bonus per low survivor
+    int LowSurvivors;       // Below x survivors earns that bonus 
+    bool AdvancingLeft;
+    //
+    void InitGameVars() {
+        Score = 0;
+        InvaderSpeed = 1;
+        DistPerAdvance = 30;
+        AccelPerAdvance = 0.5;
+        AccelLowSurvivors = 1;
+        LowSurvivors = 6;
+        AdvancingLeft = true;
+    };
 }

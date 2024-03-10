@@ -5,30 +5,6 @@ void GameObjectDrawer::DrawGameObjects(GameObject* FirstGameObject){
 	while (true){
 		if (CurGameObject == nullptr) break;
 		GameObject* NextGameObject = CurGameObject->GetNext();
-		switch (CurGameObject->type) {
-			case GameObject::ObjectTypes::PLAYER_1:
-				break;
-			case GameObject::ObjectTypes::PLAYER_2:
-				break;
-			case GameObject::ObjectTypes::INVADER_1A:
-				break;
-			case GameObject::ObjectTypes::INVADER_1B:
-				break;
-			case GameObject::ObjectTypes::INVADER_2A:
-				break;
-			case GameObject::ObjectTypes::INVADER_2B:
-				break;
-			case GameObject::ObjectTypes::INVADER_3A:
-				break;
-			case GameObject::ObjectTypes::INVADER_3B:
-				break;
-			case GameObject::ObjectTypes::UFO:
-				break;
-			case GameObject::ObjectTypes::PLAYER_1_PROJECTILE:
-				break;
-			case GameObject::ObjectTypes::PLAYER_2_PROJECTILE:
-				break;
-		}
 		//
 		SDL_Texture* sprite = GameSprites::Sprites[CurGameObject->type];
 		if (sprite != NULL && CurGameObject->loaded == false){
