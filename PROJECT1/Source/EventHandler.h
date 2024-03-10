@@ -42,6 +42,7 @@ enum GameEvents {
 	KP7_PRESSED,
 	KP8_PRESSED,
 	KP9_PRESSED,
+	SPACE_PRESSED,
 
 	NUM_GAME_EVENTS
 };
@@ -53,7 +54,7 @@ public:
 
 	static bool Update();
 
-	static const int NUM_EVENTS = 41;
+	static const int NUM_EVENTS = 42;
 
 	static bool events[GameEvents::NUM_GAME_EVENTS];
 private:

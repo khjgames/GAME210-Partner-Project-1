@@ -19,20 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameSprites.cpp" />
     <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Leaderboard.cpp" />
     <ClCompile Include="Source\EventHandler.cpp" />
     <ClCompile Include="Source\Gameplay\GameplayManager.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Objects\ColourBlock.cpp" />
+    <ClCompile Include="GameObjectDrawer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameSprites.h" />
+    <ClInclude Include="GameSpaces.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Leaderboard.h" />
     <ClInclude Include="Source\EventHandler.h" />
     <ClInclude Include="Source\Gameplay\GameplayManager.h" />
     <ClInclude Include="Source\Objects\ObjData.h" />
     <ClInclude Include="Source\Objects\ColourBlock.h" />
+    <ClInclude Include="GameObjectDrawer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

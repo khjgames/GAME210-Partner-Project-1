@@ -191,6 +191,11 @@ bool EventHandler::Update() {
 			SetButton(GameEvents::KP9_PRESSED, currEvents.key.type == SDL_KEYDOWN);
 			break;
 		}
+		case SDLK_SPACE:
+		{
+			SetButton(GameEvents::SPACE_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
 		}
 	}
 	return success;

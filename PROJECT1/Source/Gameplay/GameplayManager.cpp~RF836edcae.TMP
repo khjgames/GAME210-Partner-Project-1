@@ -1,0 +1,66 @@
+#include "GameplayManager.h"
+#include <ctime>
+#include <iostream>
+#include "../Graphics.h"
+// creating a basic gameobject
+#include "../Objects/ColourBlock.h"
+#include "../GameObjectDrawer.h"
+
+GameObject* GameplayManager::AddGameObject(short x, short y, short type, bool visible){
+	GameObject* NextGameObject = new GameObject(x, y, type, visible);
+	LastGameObject->SetNext(NextGameObject); // append new dynamic memory allocated object to end of linked-list
+	LastGameObject = NextGameObject;
+	return LastGameObject;
+}; // I don't need a RemoveGameObject function at present.
+
+void GameplayManager::DeleteGameObjects(){
+	GameObject* CurGameObject = FirstGameObject;
+	while (true) { // Delete all GameObjects from first to last 
+		if (CurGameObject == nullptr) break;
+		GameObject* NextGameObject = CurGameObject->GetNext();
+		delete CurGameObject; 
+		if (NextGameObject == nullptr) break; // we reached the last object
+		else CurGameObject = NextGameObject;
+	}
+	FirstGameObject = nullptr;
+	LastGameObject = nullptr;
+}
+
+void GameplayManager::InitGameObjects(){
+	FirstGameObject = new GameObject(Graphics::WINDOW_WIDTH/2-19, Graphics::WINDOW_HEIGHT - 90, GameObject::ObjectTypes::PLAYER, true);
+	LastGameObject = FirstGameObject;
+}
+
+void GameplayManager::LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS){
+	for (int a = 0; a < (PER_ROW); a++) {
+		for (int b = 0; b < NUM_ROWS; b++) {
+			AddGameObject(Graphics::WINDOW_WIDTH / 2 - 16 - (PER_ROW / 2 - a) * X_GAP, Graphics::WINDOW_HEIGHT / 3 - ((2 - b) * Y_GAP), 1 + (b / 2 % 3 * 2), true);
+		}
+	}
+}
+
+void GameplayManager::Init(){
+	srand(time(NULL));
+	GameSprites::LoadSprites(); // I forgot to call this function and wondered why my code didn't work ;-; I'm... so. SOOOO DUMB. -kieran
+	DeleteGameObjects();
+	InitGameObjects();
+	LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+} 
+// 11x4 space invaders
+// + 1 ship
+// + 1 ufo
+
+void GameplayManager::Update(){
+	// update states of all game objects
+}
+
+void GameplayManager::Render(){
+	// render next frame / all game objects	
+	DrawScore();
+	GameObjectDrawer::DrawGameObjects(FirstGameObject);
+}
+
+void GameplayManager::DrawScore(){
+	// draw the score
+	Graphics::DrawText("HIGH SCORE AND SCORE WILL GO HERE ISH", 250, 50, 500, 50);
+}

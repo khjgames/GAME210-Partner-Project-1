@@ -29,7 +29,7 @@ int main( int argc, char *argv[] )
 
 		Game.Render();
 
-		SDL_Delay(16); // around 62.5 fps 
+		SDL_Delay(8); // around 125 fps 
 
 		// apply the changes to the screen 
 		Graphics::EndRender();

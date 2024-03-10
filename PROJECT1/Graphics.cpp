@@ -1,14 +1,10 @@
 #include "Graphics.h"
-#include <SDL_ttf.h>
 
 SDL_Window* Graphics::window;
 SDL_Renderer* Graphics::renderer;
 
 bool Graphics::Init()
 {
-	const int WINDOW_WIDTH = 1280;
-	const int WINDOW_HEIGHT = 720;
-
 	// create little window with minimize and x to close 
 	window = SDL_CreateWindow("Partner Project 1",
 		SDL_WINDOWPOS_UNDEFINED,
@@ -82,10 +78,8 @@ void Graphics::EndRender()
 }
 
 // example based on the code from: https://stackoverflow.com/questions/22886500/how-to-render-text-in-sdl2
-void Graphics::DrawText(const char * text, float x, float y, int width, int height)
+void Graphics::DrawText(const char * text, float x, float y, int width, int height, TTF_Font* font)
 {
-	TTF_Font* font = TTF_OpenFont("arialbd.ttf", 24);
-
 	SDL_Color Red = { 255, 0, 0 };
 
 	SDL_Surface* surfaceMessage = TTF_RenderText_Solid(font, text, Red);
