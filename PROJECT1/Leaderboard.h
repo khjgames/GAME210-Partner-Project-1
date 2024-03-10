@@ -4,12 +4,16 @@
 
 #pragma once
 
-const int MAX_ENTRIES = 10;
-const int MAX_NAME_SIZE = 9;
-const int MAX_SCORE_SIZE = 11;
+namespace LeaderboardConst {
+	const int MAX_ENTRIES = 10;
+	const int MAX_NAME_SIZE = 9;
+	const int MAX_SCORE_SIZE = 11;
 
-const char NAME_TERMINATE = '_';
-const char SCORE_TERMINATE = ';';
+	const char NAME_TERMINATE = '_';
+	const char SCORE_TERMINATE = ';';
+}
+
+using namespace LeaderboardConst;
 
 struct LBEntry {
 	char name[MAX_NAME_SIZE + 1];

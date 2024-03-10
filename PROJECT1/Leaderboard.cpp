@@ -10,6 +10,8 @@
 
 using namespace std;
 
+using namespace LeaderboardConst;
+
 Leaderboard::Leaderboard(const char* fn)
 {
 	// save the file name for use in saving on close
