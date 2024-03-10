@@ -17,7 +17,7 @@ namespace GameVars {
     int ProjectileSpeed = 5;
     //
     int SpriteInt = 0;
-    int SpriteIntMax = 36;
+    int SpriteIntMax = 200; // Sprite animation interval
     int LastTick;
     int Score;              // Current score
     int InvaderSpeed;       // Invader pixels per tick towards edge

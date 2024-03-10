@@ -2,6 +2,7 @@
 
 #include "SDL.h"
 #include "../Source/Objects/ObjData.h"
+#include <SDL_ttf.h>
 
 class Graphics
 {
@@ -17,7 +18,7 @@ public:
 	static void SetColor(Colour color);
 	static void DrawRect(Transform2D transform, Vec2D dimensions, bool isFilled = false);
 	static void DrawLine(Transform2D transform, Vec2D dimensions);
-	static void DrawText(const char* text, float x, float y, int width, int height);
+	static void DrawText(const char* text, float x, float y, int width, int height, TTF_Font* font);
 	static SDL_Renderer* renderer;
 	static const int WINDOW_WIDTH = 1280;
 	static const int WINDOW_HEIGHT = 720;
