@@ -53,6 +53,13 @@ public:
 	~EventHandler();
 
 	static bool Update();
+	static bool MDown(short btn);
+	static bool MUp(short btn);
+	static bool MClicked(short btn);
+	static bool MReleased(short btn);
+
+	static int MouseX;
+	static int MouseY;
 
 	static const int NUM_EVENTS = 42;
 
@@ -60,6 +67,8 @@ public:
 private:
 
 	static void SetButton(GameEvents eventNum, bool pressed);
+	static bool MouseState[5];
+	static bool PrevMouseState[5];
 };
 
 

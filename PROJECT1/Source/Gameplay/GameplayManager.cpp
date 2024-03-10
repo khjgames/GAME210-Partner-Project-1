@@ -5,8 +5,8 @@
 // creating a basic gameobject
 #include "../Objects/ColourBlock.h"
 #include "../GameObjectDrawer.h"
-#include "../GameSpaces.h"
 #include "../EventHandler.h"
+#include "../GameSpaces.h"
 
 using namespace GameTime;
 using namespace GameVars;
@@ -55,14 +55,14 @@ void GameplayManager::Init(){
 	InitGameObjects();
 	InitGameVars();		// Reset and init a bunch of game vars
 
-	LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+	//LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 } 
 // 11x4 space invaders
 // + 1 ship
 // + 1 ufo
 
 void SpawnProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject){
-	if (ProjGameObject->visible == false) { // Projectile spawn
+	if (ProjGameObject->visible == false && PlayerGameObject->visible == true) { // Projectile spawn
 		ProjGameObject->transform.x = PlayerGameObject->transform.x + PlayerGameObject->transform.w / 2 - 2;
 		ProjGameObject->transform.y = PlayerGameObject->transform.y;
 		ProjGameObject->visible = true;
@@ -71,8 +71,8 @@ void SpawnProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject){
 
 void MoveProjectile(GameObject* ProjGameObject) {
 	if (ProjGameObject->visible == true) { // Projectile fly and explode
-		ProjGameObject->transform.y = max(90, ProjGameObject->transform.y - ProjectileSpeed);
-		if (ProjGameObject->transform.y == 90) ProjGameObject->visible = false;
+		ProjGameObject->transform.y = max(75, ProjGameObject->transform.y - ProjectileSpeed);
+		if (ProjGameObject->transform.y == 75) ProjGameObject->visible = false;
 	}
 }
 
@@ -126,17 +126,44 @@ void HandleInvader(GameObject* InvaderGameObject, GameObject* Player1Proj, GameO
 	}
 }
 
+void ToggleNumPlayers(GameObject* FirstGameObject){
+	NumPlayers = (NumPlayers == 1) ? 2 : 1;
+	GameObject* CurGameObject = FirstGameObject;
+	//
+	while (true) {
+		if (CurGameObject == nullptr) break;
+		GameObject* NextGameObject = CurGameObject->GetNext();
+		switch (CurGameObject->type) {
+		case GameObject::ObjectTypes::PLAYER_2:
+			if (NumPlayers >= 2) {
+				CurGameObject->visible = true;
+			}
+			else {
+				CurGameObject->visible = false;
+			}
+			break;
+		}
+		//
+		if (NextGameObject == nullptr) break; // we reached the last object
+		else CurGameObject = NextGameObject;
+	}
+	//
+}
+
 void GameplayManager::Update(){
+	//
 	GameObject* CurGameObject = FirstGameObject;
 	GameObject* Player1 = nullptr;
 	GameObject* Player2 = nullptr;
 	GameObject* Player1Proj = nullptr;
 	GameObject* Player2Proj = nullptr;
+	//
 	int MinX = 9999; int MaxX = 0; int MaxX_W = 0; int LivingInvaders = 0; bool ReachedEdge = false; int AdvanceAmount = InvaderSpeed;
 	// Get the min max positions of all invaders.
 
 	SpriteInt = (SpriteInt < SpriteIntMax) ? SpriteInt + 1 : 0;
 
+	// ------------ ||
 	while (true) {
 		if (CurGameObject == nullptr) break;
 		GameObject* NextGameObject = CurGameObject->GetNext();
@@ -189,7 +216,7 @@ void GameplayManager::Update(){
 		if (NextGameObject == nullptr) break; // we reached the last object
 		else CurGameObject = NextGameObject;
 	}
-
+	//
 	if (LivingInvaders > 0){
 		//
 		for (int i = 1; i < LowSurvivors; i++){ // Move faster the fewer survivors < LowSurvivors there are.
@@ -243,14 +270,32 @@ void GameplayManager::Update(){
 	else { // You beat the current level
 	
 	}
+	// ------------ ||
 
 	LastTick = tick();
 }
 
 void GameplayManager::Render(){
 	// render next frame / all game objects	
-	DrawScore();
+	if (AtMenu == false) DrawScore();
+	else {
+		DrawMenu();
+	}
 	GameObjectDrawer::DrawGameObjects(FirstGameObject);
+}
+
+bool MouseInRect(int x, int y, int w, int h) {
+	return EventHandler::MouseX >= x && EventHandler::MouseX <= x + w && EventHandler::MouseY >= y && EventHandler::MouseY <= y + h;
+}
+
+void GameplayManager::DrawMenu(){
+	string TitleString = "Void Invaders";
+	string PlayerString = "Players: " + to_string(NumPlayers) + "P";
+	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH/2 - 17 * TitleString.size(), 34, TitleString.size() * 30, 70, ArialFont);
+	Graphics::DrawText(PlayerString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 150, PlayerString.size() * 18, 44, ArialFont);
+	if (EventHandler::MClicked(1) == true && MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 150, PlayerString.size() * 18, 44) == true){
+		ToggleNumPlayers(FirstGameObject);
+	}
 }
 
 void GameplayManager::DrawScore(){
