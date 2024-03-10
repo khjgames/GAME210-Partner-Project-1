@@ -5,7 +5,7 @@
 #pragma once
 
 const int MAX_ENTRIES = 10;
-const int MAX_NAME_SIZE = 5;
+const int MAX_NAME_SIZE = 9;
 const int MAX_SCORE_SIZE = 11;
 
 const char NAME_TERMINATE = '_';

@@ -3,6 +3,10 @@
 #include <string.h>
 
 bool EventHandler::events[];
+bool EventHandler::MouseState[5] = { false, false, false, false, false };
+bool EventHandler::PrevMouseState[5] = { false, false, false, false, false };
+int EventHandler::MouseX = 0;
+int EventHandler::MouseY = 0;
 
 EventHandler::EventHandler() {
 }
@@ -14,6 +18,10 @@ bool EventHandler::Update() {
 	bool success = true;
 
 	SDL_Event currEvents;
+
+	SDL_GetMouseState(&MouseX, &MouseY);
+
+	for (int i = 0; i < 5; ++i) PrevMouseState[i] = MouseState[i];
 
 	while (SDL_PollEvent(&currEvents)) {
 		switch (currEvents.key.keysym.sym) {
@@ -197,8 +205,33 @@ bool EventHandler::Update() {
 			break;
 		}
 		}
+		//
+		switch (currEvents.type) {
+			case SDL_MOUSEBUTTONDOWN:
+				MouseState[currEvents.button.button] = true;
+				break;
+			case SDL_MOUSEBUTTONUP:
+				MouseState[currEvents.button.button] = false;
+				break;
+		}
 	}
 	return success;
+}
+
+bool EventHandler::MDown(short btn) {
+	return MouseState[btn];
+}
+
+bool EventHandler::MUp(short btn) {
+	return !MouseState[btn];
+}
+
+bool EventHandler::MClicked(short btn) {
+	return MouseState[btn] && !PrevMouseState[btn];
+}
+
+bool EventHandler::MReleased(short btn) {
+	return !MouseState[btn] && PrevMouseState[btn];
 }
 
 void EventHandler::SetButton(GameEvents eventNum, bool pressed) {

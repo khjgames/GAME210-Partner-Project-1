@@ -26,4 +26,5 @@ private:
 	int LastSpriteAnim;
 	void Init(); 
 	void DrawScore(); 
+	void DrawMenu();
 };
