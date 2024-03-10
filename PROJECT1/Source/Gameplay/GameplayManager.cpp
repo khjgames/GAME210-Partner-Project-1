@@ -7,9 +7,11 @@
 #include "../GameObjectDrawer.h"
 #include "../EventHandler.h"
 #include "../GameSpaces.h"
+#include "../Leaderboard.h"
 
 using namespace GameTime;
 using namespace GameVars;
+using namespace LeaderboardConst;
 
 GameObject* GameplayManager::AddGameObject(short x, short y, short type, bool visible){
 	GameObject* NextGameObject = new GameObject(x, y, type, visible);
@@ -315,7 +317,7 @@ void GameplayManager::DrawMenu() {
 
 		for (int i = 0; i < TYPESET_SIZE; i++) {
 			if (EventHandler::KeyHit(i)) {
-				if (PlayerName.size() <= LeaderboardConst::MAX_NAME_SIZE-1) {
+				if (PlayerName.size() <= MAX_NAME_SIZE-1) {
 					PlayerName = PlayerName + Typeset[i];
 				}
 			}
