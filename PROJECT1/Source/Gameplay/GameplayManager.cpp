@@ -153,7 +153,7 @@ void GameplayManager::Update(){
 		case GameObject::ObjectTypes::INVADER_1B: // Intentional fallthrough
 		case GameObject::ObjectTypes::INVADER_2A: // Intentional fallthrough
 		case GameObject::ObjectTypes::INVADER_2B: // Intentional fallthrough
-		case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthrough
+		case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthroughD
 		case GameObject::ObjectTypes::INVADER_3B: // Call a function for all invader cases
 			if (SpriteInt == SpriteIntMax) {
 				if (CurGameObject->type % 2 == GameObject::ObjectTypes::INVADER_1A % 2) {
@@ -256,5 +256,5 @@ void GameplayManager::Render(){
 void GameplayManager::DrawScore(){
 	// draw the score
 	string ScoreString = "Score: " + to_string(Score);
-	Graphics::DrawText(ScoreString.c_str(), 150, 20, ScoreString.size() * 20, 50);
+	Graphics::DrawText(ScoreString.c_str(), 150, 20, ScoreString.size() * 20, 50, ArialFont);
 }

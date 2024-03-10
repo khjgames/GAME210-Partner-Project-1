@@ -2,16 +2,18 @@
 // creating a basic gameobject
 #include "../Objects/ColourBlock.h"
 #include "../GameObject.h"
+#include <SDL_ttf.h>
 
 class GameplayManager {
 public:
-	GameplayManager() { Init(); };
-	~GameplayManager() {};
+	GameplayManager() { Init(); ArialFont = TTF_OpenFont("arialbd.ttf", 24); }; // fixed memory leak
+	~GameplayManager() { TTF_CloseFont(ArialFont); };
 	
 	void Update();
 	void Render();
 	void LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS);
 
+	TTF_Font* ArialFont;
 private: 
 	void InitGameObjects();
 	void DeleteGameObjects();
