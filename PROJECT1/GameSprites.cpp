@@ -1,6 +1,8 @@
 #include "GameSprites.h"
 
-string GameSprites::Paths[GameSprites::NUM_SPRITES] = { "ship.bmp","ship_2.bmp","blue_1.bmp","blue_2.bmp","green_1.bmp","green_2.bmp","pink_1.bmp","pink_2.bmp","ufo.bmp", "proj.bmp", "proj_2.bmp" };
+string GameSprites::Paths[GameSprites::NUM_SPRITES] = { "ship.bmp","ship_2.bmp","blue_1.bmp",
+"blue_2.bmp","green_1.bmp","green_2.bmp","pink_1.bmp","pink_2.bmp","ufo.bmp", "proj.bmp", "proj_2.bmp" };
+//
 Vector2 GameSprites::Dimensions[GameSprites::NUM_SPRITES];
 SDL_Texture* GameSprites::Sprites[GameSprites::NUM_SPRITES];
 

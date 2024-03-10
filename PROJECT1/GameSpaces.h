@@ -13,19 +13,25 @@ namespace GameTime {
 
 namespace GameVars {
     //
-    int ShipSpeed = 3;
-    int ProjectileSpeed = 5;
+    short NumPlayers = 2;
+    short ShipSpeed = 3;
+    short ProjectileSpeed = 5;
     //
-    int SpriteInt = 0;
-    int SpriteIntMax = 200; // Sprite animation interval
+    short SpriteInt = 0;
+    short SpriteIntMax = 200; // Sprite animation interval
     int LastTick;
     int Score;              // Current score
-    int InvaderSpeed;       // Invader pixels per tick towards edge
-    int DistPerAdvance;     // Pixels down to move after reach edge
-    int AccelPerAdvance;    // InvaderSpeed increase after reach edge
-    int AccelLowSurvivors;  // InvaderSpeed bonus per low survivor
-    int LowSurvivors;       // Below x survivors earns that bonus 
+    short InvaderSpeed;       // Invader pixels per tick towards edge
+    short DistPerAdvance;     // Pixels down to move after reach edge
+    short AccelPerAdvance;    // InvaderSpeed increase after reach edge
+    short AccelLowSurvivors;  // InvaderSpeed bonus per low survivor
+    short LowSurvivors;       // Below x survivors earns that bonus 
     bool AdvancingLeft;
+    bool AtMenu = true;
+    bool ViewingLeaderboard = true;
+    string PlayerName = "AAA";
+    string NameEntry = "PlayerName: ";
+    string NameEdit = "";
     //
     void InitGameVars() {
         Score = 0;

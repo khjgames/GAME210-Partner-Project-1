@@ -7,6 +7,7 @@
 #include "../GameObjectDrawer.h"
 #include "../EventHandler.h"
 #include "../GameSpaces.h"
+#include "../Leaderboard.h"
 
 using namespace GameTime;
 using namespace GameVars;
@@ -55,14 +56,14 @@ void GameplayManager::Init(){
 	InitGameObjects();
 	InitGameVars();		// Reset and init a bunch of game vars
 
-	LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+	//LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 } 
 // 11x4 space invaders
 // + 1 ship
 // + 1 ufo
 
 void SpawnProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject){
-	if (ProjGameObject->visible == false) { // Projectile spawn
+	if (ProjGameObject->visible == false && PlayerGameObject->visible == true) { // Projectile spawn
 		ProjGameObject->transform.x = PlayerGameObject->transform.x + PlayerGameObject->transform.w / 2 - 2;
 		ProjGameObject->transform.y = PlayerGameObject->transform.y;
 		ProjGameObject->visible = true;
@@ -71,8 +72,8 @@ void SpawnProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject){
 
 void MoveProjectile(GameObject* ProjGameObject) {
 	if (ProjGameObject->visible == true) { // Projectile fly and explode
-		ProjGameObject->transform.y = max(90, ProjGameObject->transform.y - ProjectileSpeed);
-		if (ProjGameObject->transform.y == 90) ProjGameObject->visible = false;
+		ProjGameObject->transform.y = max(75, ProjGameObject->transform.y - ProjectileSpeed);
+		if (ProjGameObject->transform.y == 75) ProjGameObject->visible = false;
 	}
 }
 
@@ -126,17 +127,44 @@ void HandleInvader(GameObject* InvaderGameObject, GameObject* Player1Proj, GameO
 	}
 }
 
+void ToggleNumPlayers(GameObject* FirstGameObject){
+	NumPlayers = (NumPlayers == 1) ? 2 : 1;
+	GameObject* CurGameObject = FirstGameObject;
+	//
+	while (true) {
+		if (CurGameObject == nullptr) break;
+		GameObject* NextGameObject = CurGameObject->GetNext();
+		switch (CurGameObject->type) {
+		case GameObject::ObjectTypes::PLAYER_2:
+			if (NumPlayers >= 2) {
+				CurGameObject->visible = true;
+			}
+			else {
+				CurGameObject->visible = false;
+			}
+			break;
+		}
+		//
+		if (NextGameObject == nullptr) break; // we reached the last object
+		else CurGameObject = NextGameObject;
+	}
+	//
+}
+
 void GameplayManager::Update(){
+	//
 	GameObject* CurGameObject = FirstGameObject;
 	GameObject* Player1 = nullptr;
 	GameObject* Player2 = nullptr;
 	GameObject* Player1Proj = nullptr;
 	GameObject* Player2Proj = nullptr;
+	//
 	int MinX = 9999; int MaxX = 0; int MaxX_W = 0; int LivingInvaders = 0; bool ReachedEdge = false; int AdvanceAmount = InvaderSpeed;
 	// Get the min max positions of all invaders.
 
 	SpriteInt = (SpriteInt < SpriteIntMax) ? SpriteInt + 1 : 0;
 
+	// ------------ ||
 	while (true) {
 		if (CurGameObject == nullptr) break;
 		GameObject* NextGameObject = CurGameObject->GetNext();
@@ -189,7 +217,7 @@ void GameplayManager::Update(){
 		if (NextGameObject == nullptr) break; // we reached the last object
 		else CurGameObject = NextGameObject;
 	}
-
+	//
 	if (LivingInvaders > 0){
 		//
 		for (int i = 1; i < LowSurvivors; i++){ // Move faster the fewer survivors < LowSurvivors there are.
@@ -243,18 +271,101 @@ void GameplayManager::Update(){
 	else { // You beat the current level
 	
 	}
+	// ------------ ||
 
 	LastTick = tick();
 }
 
 void GameplayManager::Render(){
 	// render next frame / all game objects	
-	DrawScore();
+	if (AtMenu == false) DrawScore();
+	else {
+		if (ViewingLeaderboard) {
+			DrawLeaderboard();
+		}
+		else {
+			DrawMenu();
+		}
+	}
 	GameObjectDrawer::DrawGameObjects(FirstGameObject);
+}
+
+bool MouseInRect(int x, int y, int w, int h) {
+	return EventHandler::MouseX >= x && EventHandler::MouseX <= x + w && EventHandler::MouseY >= y && EventHandler::MouseY <= y + h;
+}
+
+void GameplayManager::DrawMenu() {
+	string TitleString = "Void Invaders";
+	string PlayerString = "Players: " + to_string(NumPlayers) + "P";
+	string PlayerNameString = NameEntry + PlayerName + NameEdit;
+
+	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
+	Graphics::DrawText(PlayerString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 145, PlayerString.size() * 18, 44, ArialFont);
+	if (EventHandler::MClicked(1) == true && MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 145, PlayerString.size() * 18, 44) == true) {
+		ToggleNumPlayers(FirstGameObject);
+	}
+
+	Graphics::DrawText(PlayerNameString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44, ArialFont);
+	if (EventHandler::MClicked(1) == true){ 
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44) == true) {
+			NameEntry = "-> PlayerName: "; NameEdit = "_";
+		}
+		else if (NameEdit == "_") {
+			NameEntry = "PlayerName: "; NameEdit = "";
+		}
+	}
+	if (NameEdit == "_") {
+		if (EventHandler::KeyHit(GameEvents::BACKSPACE_PRESSED)) {
+			if (!PlayerName.empty()) PlayerName.pop_back();
+		}
+
+		if (EventHandler::KeyHit(GameEvents::ENTER_PRESSED)) {
+			NameEntry = "PlayerName: "; NameEdit = "";
+		}
+	}
 }
 
 void GameplayManager::DrawScore(){
 	// draw the score
 	string ScoreString = "Score: " + to_string(Score);
 	Graphics::DrawText(ScoreString.c_str(), 150, 20, ScoreString.size() * 20, 50, ArialFont);
+}
+
+void GameplayManager::DrawHighScore() {
+	// draw the high score
+	string ScoreString = "High Score: " + to_string(lb.GetEntry(0).score);
+	Graphics::DrawText(ScoreString.c_str(), 500, 20, ScoreString.size() * 20, 50, ArialFont);
+}
+
+void GameplayManager::DrawLeaderboard() {
+	string TitleString = "Void Invaders";
+	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
+
+	const short CHAR_WIDTH = 20;
+	const short CHAR_HEIGHT = 35;
+
+	// get the size of the high score entry to get the leaderboard centered
+	int x = Graphics::WINDOW_WIDTH / 2 - (to_string(lb.GetEntry(0).score).size() * CHAR_WIDTH / 2 + MAX_NAME_SIZE * CHAR_WIDTH / 2 + CHAR_WIDTH / 2) ;
+	int y = 130;
+
+	// draw each entry in the leaderboard
+	for (int i = 0; i < MAX_ENTRIES; i++) {
+		LBEntry entry = lb.GetEntry(i);
+		Graphics::DrawText(entry.name,
+			x, y + i * CHAR_HEIGHT, MAX_NAME_SIZE * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+		string scoreString = to_string(entry.score);
+		Graphics::DrawText(scoreString.c_str(),
+			x + (MAX_NAME_SIZE + 1) * CHAR_WIDTH, y + i * CHAR_HEIGHT,
+			scoreString.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+	}
+
+	string buttonText = "BACK TO MENU";
+	Graphics::DrawText(buttonText.c_str(),
+		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175 
+		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+	if (EventHandler::MClicked(1) == true && MouseInRect(
+		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175
+		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT) == true) {
+		ViewingLeaderboard = false;
+	}
 }
