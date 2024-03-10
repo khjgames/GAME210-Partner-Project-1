@@ -56,8 +56,6 @@ void GameplayManager::Init(){
 	DeleteGameObjects();
 	InitGameObjects();
 	InitGameVars();		// Reset and init a bunch of game vars
-
-	//LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 } 
 // 11x4 space invaders
 // + 1 ship
@@ -292,14 +290,17 @@ bool MouseInRect(int x, int y, int w, int h) {
 
 void GameplayManager::DrawMenu() {
 	string TitleString = "Void Invaders";
-	string PlayerString = "Players: " + to_string(NumPlayers) + "P";
 	string PlayerNameString = NameEntry + PlayerName + NameEdit;
 
 	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
-	Graphics::DrawText(PlayerString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 145, PlayerString.size() * 18, 44, ArialFont);
-	if (EventHandler::MClicked(1) == true && MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerString.size(), 145, PlayerString.size() * 18, 44) == true) {
-		ToggleNumPlayers(FirstGameObject);
+	if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * CoopBtnString.size(), 145, CoopBtnString.size() * 18, 44) == true) {
+		CoopBtnString = "> Players: " + to_string(NumPlayers) + "P <";
+		if (EventHandler::MClicked(1) == true) ToggleNumPlayers(FirstGameObject);
 	}
+	else {
+		CoopBtnString = "Players: " + to_string(NumPlayers) + "P";
+	}
+	Graphics::DrawText(CoopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * CoopBtnString.size(), 145, CoopBtnString.size() * 18, 44, ArialFont);
 
 	Graphics::DrawText(PlayerNameString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44, ArialFont);
 	if (EventHandler::MClicked(1) == true){ 
@@ -327,6 +328,16 @@ void GameplayManager::DrawMenu() {
 			NameEntry = "PlayerName: "; NameEdit = "";
 		}
 	}
+
+	Graphics::DrawText(StartBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * StartBtnString.size(), 330, StartBtnString.size() * 18, 44, ArialFont);
+	if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * StartBtnString.size(), 330, StartBtnString.size() * 18, 44) == true) {
+		StartBtnString = "> Start Game <";
+		if (EventHandler::MClicked(1) == true && AtMenu == true) { 
+			AtMenu = false; 
+			LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+		}
+	}
+	else StartBtnString = "Start Game";
 }
 
 void GameplayManager::DrawScore(){
