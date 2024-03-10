@@ -313,6 +313,14 @@ void GameplayManager::DrawMenu() {
 			if (!PlayerName.empty()) PlayerName.pop_back();
 		}
 
+		for (int i = 0; i < TYPESET_SIZE; i++) {
+			if (EventHandler::KeyHit(i)) {
+				if (PlayerName.size() <= LeaderboardConst::MAX_NAME_SIZE-1) {
+					PlayerName = PlayerName + Typeset[i];
+				}
+			}
+		}
+
 		if (EventHandler::KeyHit(GameEvents::ENTER_PRESSED)) {
 			NameEntry = "PlayerName: "; NameEdit = "";
 		}
