@@ -11,7 +11,16 @@ namespace GameTime {
     }
 }
 
-namespace GameSettings {
+namespace GameVars {
     int ShipSpeed = 3;
-    int ProjectileSpeed = 4;
+    int ProjectileSpeed = 5;
+    //
+    int Score;
+    int InvaderSpeed;
+    int DistPerAdvance;
+    int AccelPerAdvance;
+    int AccelLowSurvivors;
+    int FrameSpeedBonus;
+    int LastTick;
+    bool AdvancingLeft = true;
 }

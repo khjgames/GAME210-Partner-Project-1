@@ -12,12 +12,6 @@ public:
 	void Render();
 	void LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS);
 
-	int CurSpeed;
-	int AccelPerWave;
-	int AccelLowSurvivors;
-	int FrameSpeedBonus;
-	int LastTick;
-
 private: 
 	void InitGameObjects();
 	void DeleteGameObjects();
