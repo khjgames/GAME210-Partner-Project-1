@@ -5,8 +5,11 @@
 // standard libraries
 #include <fstream>
 
-// header files
+// header a
 #include "Leaderboard.h"
+
+#include "../GameSpaces.h"
+#include <string>
 
 using namespace std;
 
@@ -193,6 +196,12 @@ void Leaderboard::Save()
 			// add a score terminator
 			output << SCORE_TERMINATE;
 		}
+
+		//output << ">" << to_string(GameVars::VoidBits) << "<";
+		//for (int num = 0; num < GameVars::SHOP_UPGRADES; num++) {
+			//output << ">" << to_string(GameVars::OwnedUpgrades[num]) << "<";
+		//}
+
 	}
 	output.close();
 }
