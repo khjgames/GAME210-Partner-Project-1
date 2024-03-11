@@ -145,13 +145,16 @@ void HandleUFO(GameObject* UFOGameObject, GameObject* Player1Proj, GameObject* P
 	if ((Player1Proj->visible == true) && ObjectsCollide(UFOGameObject, Player1Proj)) {
 		Player1Proj->visible = false; UFOGameObject->visible = false; 
 		if (OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
-			Score += 50; VoidBits += floor(Level);
+			Score += 50; VoidBits += floor(Level*1.5);
 		}
-		Score += 100; VoidBits += 2 + floor(Level);
+		Score += 100; VoidBits += 2 + floor(Level * 1.5);
 	}
 	if ((Player2Proj->visible == true) && ObjectsCollide(UFOGameObject, Player2Proj)) {
 		Player2Proj->visible = false; UFOGameObject->visible = false; 
-		Score += 100; VoidBits += 2 + floor(Level);
+		if (OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
+			Score += 50; VoidBits += floor(Level * 1.5);
+		}
+		Score += 100; VoidBits += 2 + floor(Level * 1.5);
 	}
 }
 
@@ -315,7 +318,7 @@ void GameplayManager::Update(){
 	}
 	else { 
 		if (AtMenu == false) { // You beat the current level
-			Level++; VoidBits += Level;
+			Level++; VoidBits += floor(Level*1.5);
 			short NumInvade = 11;
 			short NumWaves = 6 + floor(Level / 4);
 			if (Level % 2 == 0) NumInvade = 12;
