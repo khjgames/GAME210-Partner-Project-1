@@ -563,11 +563,12 @@ void GameplayManager::DrawLeaderboard() {
 
 	// draw each entry in the 1 player leaderboard with title
 	string onePlayerTitle = "1 Player";
-	Graphics::DrawText(onePlayerTitle.c_str(), Graphics::WINDOW_WIDTH * 0.25 - onePlayerTitle.size() * CHAR_WIDTH / 2, y - 50, onePlayerTitle.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+	Graphics::DrawText(onePlayerTitle.c_str(), Graphics::WINDOW_WIDTH * 0.25 - onePlayerTitle.size() * 15 / 2, y - 50, onePlayerTitle.size() * 15, CHAR_HEIGHT, ArialFont);
 	for (int i = 0; i < MAX_ENTRIES; i++) {
 		LBEntry entry = lb.GetEntry(i);
-		Graphics::DrawText(entry.name,
-			x, y + i * CHAR_HEIGHT, MAX_NAME_SIZE * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+		string name = entry.name;
+		Graphics::DrawText(name.c_str(),
+			x, y + i * CHAR_HEIGHT, name.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
 		string scoreString = to_string(entry.score);
 		Graphics::DrawText(scoreString.c_str(),
 			x + (MAX_NAME_SIZE + 1) * CHAR_WIDTH, y + i * CHAR_HEIGHT,
@@ -576,12 +577,13 @@ void GameplayManager::DrawLeaderboard() {
 
 	// draw each entry in the 2 player leaderboard with title
 	string twoPlayerTitle = "2 Player";
-	Graphics::DrawText(twoPlayerTitle.c_str(), Graphics::WINDOW_WIDTH * 0.75 - twoPlayerTitle.size() * CHAR_WIDTH / 2, y - 50, twoPlayerTitle.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+	Graphics::DrawText(twoPlayerTitle.c_str(), Graphics::WINDOW_WIDTH * 0.75 - twoPlayerTitle.size() * 15 / 2, y - 50, twoPlayerTitle.size() * 15, CHAR_HEIGHT, ArialFont);
 	x += Graphics::WINDOW_WIDTH / 2;
 	for (int i = 0; i < MAX_ENTRIES; i++) {
 		LBEntry entry = lb.GetEntry(i, TWO_PLAYER);
-		Graphics::DrawText(entry.name,
-			x, y + i * CHAR_HEIGHT, MAX_NAME_SIZE * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+		string name = entry.name;
+		Graphics::DrawText(name.c_str(),
+			x, y + i * CHAR_HEIGHT, name.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
 		string scoreString = to_string(entry.score);
 		Graphics::DrawText(scoreString.c_str(),
 			x + (MAX_NAME_SIZE + 1) * CHAR_WIDTH, y + i * CHAR_HEIGHT,
