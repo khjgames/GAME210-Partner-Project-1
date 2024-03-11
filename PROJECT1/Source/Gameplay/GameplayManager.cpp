@@ -58,6 +58,7 @@ void GameplayManager::Init(){
 	DeleteGameObjects();
 	InitGameObjects();
 	InitGameVars();		// Reset and init a bunch of game vars
+	LoadGame();
 } 
 
 
@@ -504,8 +505,8 @@ void GameplayManager::DrawScore(){
 		if (GameOver == 2) { 
 			GameOver = 3;
 			ScorePlaced = lb.AddEntry(PlayerName.c_str(), Score);
-
 			lb.Save();
+			SaveGame();
 		}
 		if (GameOver >= 3){
 			string PlaceGrammar = "th";

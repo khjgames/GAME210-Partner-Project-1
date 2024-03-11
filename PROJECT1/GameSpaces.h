@@ -1,6 +1,10 @@
 #pragma once
 #include <chrono> // fancy thing that can get time with ms precision
 #include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
 
 namespace GameTime {
     inline int dif(int a, int b) { return abs(a - b); }
@@ -77,5 +81,49 @@ namespace GameVars {
         AdvancingLeft = true;
         ApplyUpgrades();
     };
+    //
+    void SaveGame(){
+        // create an output stream
+        ofstream output("SaveGameData.txt");
+        if (output.fail()) {
+            printf("Save failed");
+        }
+        else {
+            output << to_string(VoidBits) << ",";
+            for (int num = 0; num < SHOP_UPGRADES; num++) {
+                output << to_string(OwnedUpgrades[num]) << ",";
+            }
+        }
+        output.close();
+    }
+    //
+    void LoadGame(){
+        ifstream input("SaveGameData.txt");
+        if (input.fail()) SaveGame();
+        else {
+            string line; getline(input, line);
+
+            short pos = 0; short found; int i = 0;
+
+            if ((found = line.find(',')) != std::string::npos) {
+                VoidBits = std::stoi(line.substr(0, found));
+                pos = found + 1;
+            }
+
+            while (pos < line.size() && i < SHOP_UPGRADES) {
+                if ((found = line.find(',', pos)) != std::string::npos) {
+                    OwnedUpgrades[i] = std::stoi(line.substr(pos, found - pos));
+                    pos = found + 1;
+                }
+                else {
+                    OwnedUpgrades[i] = std::stoi(line.substr(pos));
+                    break;
+                }
+                i++;
+            }
+
+            input.close();
+        }
+    }
     //
 }
