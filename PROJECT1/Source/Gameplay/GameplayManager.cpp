@@ -135,10 +135,10 @@ void HandleInvader(GameObject* InvaderGameObject, GameObject* Player1Proj, GameO
 void HandleUFO(GameObject* UFOGameObject, GameObject* Player1Proj, GameObject* Player2Proj) {
 	UFOGameObject->transform.x -= 2+InvaderSpeed;
 	if ((Player1Proj->visible == true) && ObjectsCollide(UFOGameObject, Player1Proj)) {
-		Player1Proj->visible = false; UFOGameObject->visible = false; Score += 100;
+		Player1Proj->visible = false; UFOGameObject->visible = false; Score += 100; VoidBits += 2 + floor(Level/2);
 	}
 	if ((Player2Proj->visible == true) && ObjectsCollide(UFOGameObject, Player2Proj)) {
-		Player2Proj->visible = false; UFOGameObject->visible = false; Score += 100;
+		Player2Proj->visible = false; UFOGameObject->visible = false; Score += 100; VoidBits += 2 + floor(Level/2);
 	}
 }
 
@@ -297,7 +297,7 @@ void GameplayManager::Update(){
 	}
 	else { 
 		if (AtMenu == false) { // You beat the current level
-			Level++;
+			VoidBits += Level; Level++;
 			short NumInvade = 13;
 			short NumWaves = 6 + floor(Level / 4);
 			if (Level % 2 == 0) NumInvade = 14;
@@ -329,6 +329,10 @@ void GameplayManager::Update(){
 
 void GameplayManager::Render(){
 	// render next frame / all game objects	
+	//
+	string VoidBitsString = "Void Bits: " + to_string(VoidBits);
+	Graphics::DrawText(VoidBitsString.c_str(), Graphics::WINDOW_WIDTH - VoidBitsString.size() * 25, 20, VoidBitsString.size() * 20, 50, ArialFont);
+	//
 	if (AtMenu == false) DrawScore();
 	else {
 		if (ViewingLeaderboard) {
@@ -350,60 +354,84 @@ void GameplayManager::DrawMenu() {
 	string PlayerNameString = NameEntry + PlayerName + NameEdit;
 
 	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
-	if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * CoopBtnString.size(), 145, CoopBtnString.size() * 18, 44) == true) {
-		CoopBtnString = "> Players: " + to_string(NumPlayers) + "P <";
-		if (EventHandler::MClicked(1) == true) ToggleNumPlayers(FirstGameObject);
-	}
-	else {
-		CoopBtnString = "Players: " + to_string(NumPlayers) + "P";
-	}
-	Graphics::DrawText(CoopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * CoopBtnString.size(), 145, CoopBtnString.size() * 18, 44, ArialFont);
+	//
+	if (AtShop == false) {
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * CoopBtnString.size(), 145, CoopBtnString.size() * 18, 44) == true) {
+			CoopBtnString = "> Players: " + to_string(NumPlayers) + "P <";
+			if (EventHandler::MClicked(1) == true) ToggleNumPlayers(FirstGameObject);
+		}
+		else {
+			CoopBtnString = "Players: " + to_string(NumPlayers) + "P";
+		}
+		Graphics::DrawText(CoopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * CoopBtnString.size(), 145, CoopBtnString.size() * 18, 44, ArialFont);
 
-	Graphics::DrawText(PlayerNameString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44, ArialFont);
-	if (EventHandler::MClicked(1) == true){ 
-		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44) == true) {
-			NameEntry = "-> PlayerName: "; NameEdit = "_";
+		Graphics::DrawText(PlayerNameString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44, ArialFont);
+		if (EventHandler::MClicked(1) == true) {
+			if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * PlayerNameString.size(), 220, PlayerNameString.size() * 18, 44) == true) {
+				NameEntry = "-> PlayerName: "; NameEdit = "_";
+			}
+			else if (NameEdit == "_") {
+				NameEntry = "PlayerName: "; NameEdit = "";
+			}
 		}
-		else if (NameEdit == "_") {
-			NameEntry = "PlayerName: "; NameEdit = "";
-		}
-	}
-	if (NameEdit == "_") {
-		if (EventHandler::KeyHit(GameEvents::BACKSPACE_PRESSED)) {
-			if (!PlayerName.empty()) PlayerName.pop_back();
-		}
+		if (NameEdit == "_") {
+			if (EventHandler::KeyHit(GameEvents::BACKSPACE_PRESSED)) {
+				if (!PlayerName.empty()) PlayerName.pop_back();
+			}
 
-		for (int i = 0; i < TYPESET_SIZE; i++) {
-			if (EventHandler::KeyHit(i)) {
-				if (PlayerName.size() <= MAX_NAME_SIZE-1) {
-					PlayerName = PlayerName + Typeset[i];
+			for (int i = 0; i < TYPESET_SIZE; i++) {
+				if (EventHandler::KeyHit(i)) {
+					if (PlayerName.size() <= MAX_NAME_SIZE - 1) {
+						PlayerName = PlayerName + Typeset[i];
+					}
 				}
+			}
+
+			if (EventHandler::KeyHit(GameEvents::ENTER_PRESSED)) {
+				NameEntry = "PlayerName: "; NameEdit = "";
 			}
 		}
 
-		if (EventHandler::KeyHit(GameEvents::ENTER_PRESSED)) {
-			NameEntry = "PlayerName: "; NameEdit = "";
+		Graphics::DrawText(StartBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * StartBtnString.size(), 300, StartBtnString.size() * 18, 44, ArialFont);
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * StartBtnString.size(), 300, StartBtnString.size() * 18, 44) == true) {
+			StartBtnString = "> Start Game <";
+			if (EventHandler::MClicked(1) == true && AtMenu == true) {
+				AtMenu = false;
+				LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+			}
 		}
-	}
+		else StartBtnString = "Start Game";
 
-	Graphics::DrawText(StartBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * StartBtnString.size(), 330, StartBtnString.size() * 18, 44, ArialFont);
-	if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * StartBtnString.size(), 330, StartBtnString.size() * 18, 44) == true) {
-		StartBtnString = "> Start Game <";
-		if (EventHandler::MClicked(1) == true && AtMenu == true) { 
-			AtMenu = false; 
-			LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+		Graphics::DrawText(ShopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * ShopBtnString.size(), 380, ShopBtnString.size() * 18, 44, ArialFont);
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * ShopBtnString.size(), 380, ShopBtnString.size() * 18, 44) == true) {
+			ShopBtnString = "> Shop <";
+			if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == false) {
+				AtShop = true;
+			}
 		}
-	}
-	else StartBtnString = "Start Game";
+		else ShopBtnString = "Shop";
 
-	string lbtext = "Leaderboard";
-	if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 400, lbtext.size() * 18, 44) == true) {
-		lbtext = "> Leaderboard <";
-		if (EventHandler::MClicked(1) == true) {
-			ViewingLeaderboard = true;
+
+		string lbtext = "Leaderboard";
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 460, lbtext.size() * 18, 44) == true) {
+			lbtext = "> Leaderboard <";
+			if (EventHandler::MClicked(1) == true) {
+				ViewingLeaderboard = true;
+			}
 		}
+		Graphics::DrawText(lbtext.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 460, lbtext.size() * 18, 44, ArialFont);
 	}
-	Graphics::DrawText(lbtext.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 400, lbtext.size() * 18, 44, ArialFont);
+	else {
+		Graphics::DrawText(ExitShopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 380, ExitShopBtnString.size() * 18, 44, ArialFont);
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 380, ExitShopBtnString.size() * 18, 44) == true) {
+			ExitShopBtnString = "> Exit Shop <";
+			if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true) {
+				AtShop = false;
+			}
+		}
+		else ExitShopBtnString = "Exit Shop";
+	}
+	//
 }
 
 void GameplayManager::DrawScore(){
@@ -420,6 +448,7 @@ void GameplayManager::DrawScore(){
 		if (GameOver == 2) { 
 			GameOver = 3;
 			ScorePlaced = lb.AddEntry(PlayerName.c_str(), Score);
+
 			lb.Save();
 		}
 		if (GameOver >= 3){

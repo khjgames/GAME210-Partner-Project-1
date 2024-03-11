@@ -17,6 +17,7 @@ namespace GameVars {
     short ShipSpeed = 3;
     short ProjectileSpeed = 5;
     //
+    short VoidBits = 0;
     short SpriteInt = 0;
     short SpriteIntMax = 200; // Sprite animation interval
     int LastTick;
@@ -30,6 +31,7 @@ namespace GameVars {
     short LowSurvivors;       // Below x survivors earns that bonus 
     bool AdvancingLeft;
     bool AtMenu = true;
+    bool AtShop = false;
     short GameOver = 0;
     bool ViewingLeaderboard = false;
     short ScorePlaced = 0;
@@ -37,7 +39,8 @@ namespace GameVars {
     string NameEntry = "PlayerName: ";
     string NameEdit = "";
     string StartBtnString = "Start Game";
-    
+    string ShopBtnString = "Shop";
+    string ExitShopBtnString = "Exit Shop";
     string CoopBtnString = "Players: " + to_string(NumPlayers) + "P";
     string Typeset[] = { "0","1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z" };
     const short TYPESET_SIZE = 46;
