@@ -29,7 +29,8 @@ namespace GameVars {
     short LowSurvivors;       // Below x survivors earns that bonus 
     bool AdvancingLeft;
     bool AtMenu = true;
-    bool ViewingLeaderboard = true;
+    bool GameOver = false;
+    bool ViewingLeaderboard = false;
     string PlayerName = "AAA";
     string NameEntry = "PlayerName: ";
     string NameEdit = "";

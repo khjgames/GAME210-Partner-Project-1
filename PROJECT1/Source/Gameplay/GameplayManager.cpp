@@ -78,16 +78,18 @@ void MoveProjectile(GameObject* ProjGameObject) {
 
 void ManageProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject) {
 	MoveProjectile(ProjGameObject);
-	switch (ProjGameObject->type) {
-	case GameObject::ObjectTypes::PLAYER_1_PROJECTILE: { 
-		if (EventHandler::events[GameEvents::SPACE_PRESSED] == true) { SpawnProjectile(ProjGameObject, PlayerGameObject); } 
-		break; 
-	}
-	case GameObject::ObjectTypes::PLAYER_2_PROJECTILE: { 
-		if ((EventHandler::events[GameEvents::KP0_PRESSED] == true) || (EventHandler::events[GameEvents::KP1_PRESSED] == true) || (EventHandler::events[GameEvents::KP2_PRESSED] == true) || (EventHandler::events[GameEvents::KP3_PRESSED] == true)) { 
-			SpawnProjectile(ProjGameObject, PlayerGameObject);
-		} break; 
-	}
+	if (GameOver == false) { // Can't shoot on GameOver
+		switch (ProjGameObject->type) {
+		case GameObject::ObjectTypes::PLAYER_1_PROJECTILE: {
+			if (EventHandler::events[GameEvents::SPACE_PRESSED] == true) { SpawnProjectile(ProjGameObject, PlayerGameObject); }
+			break;
+		}
+		case GameObject::ObjectTypes::PLAYER_2_PROJECTILE: {
+			if ((EventHandler::events[GameEvents::KP0_PRESSED] == true) || (EventHandler::events[GameEvents::KP1_PRESSED] == true) || (EventHandler::events[GameEvents::KP2_PRESSED] == true) || (EventHandler::events[GameEvents::KP3_PRESSED] == true)) {
+				SpawnProjectile(ProjGameObject, PlayerGameObject);
+			} break;
+		}
+		}
 	}
 }
 
@@ -199,6 +201,9 @@ void GameplayManager::Update(){
 					MaxX_W = CurGameObject->transform.w;
 				}
 				LivingInvaders++;
+				if (GameOver == false){
+					if (CurGameObject->transform.y + CurGameObject->transform.h >= FirstGameObject->transform.y) GameOver = true;
+				}
 			}
 			break;
 		case GameObject::ObjectTypes::UFO:
@@ -379,6 +384,11 @@ void GameplayManager::DrawScore(){
 
 	string LevelString = "Level: " + to_string(Level);
 	Graphics::DrawText(LevelString.c_str(), 450, 20, LevelString.size() * 20, 50, ArialFont);
+
+	if (GameOver == true) {
+		string GameOverString = "GAME OVER.";
+		Graphics::DrawText(GameOverString.c_str(), Graphics::WINDOW_WIDTH / 2 - 18 * GameOverString.size(), 110, GameOverString.size() * 36, 80, ArialFont);
+	}
 }
 
 
