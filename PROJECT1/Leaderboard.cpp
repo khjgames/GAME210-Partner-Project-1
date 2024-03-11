@@ -204,6 +204,6 @@ void Leaderboard::FillDefault()
 			Entries[e].name[c] = 'A' + e;
 		}
 		Entries[e].name[MAX_NAME_SIZE] = '\0';
-		Entries[e].score = MAX_ENTRIES - e;
+		Entries[e].score = (MAX_ENTRIES - e) * 100;
 	}
 }

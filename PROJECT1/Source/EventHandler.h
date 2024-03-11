@@ -23,7 +23,6 @@ enum GameEvents {
 	K7_PRESSED,
 	K8_PRESSED,
 	K9_PRESSED,
-
 	A_PRESSED, //I needed more
 	B_PRESSED, //buttons james
 	C_PRESSED, //welcome to yanderedev code
@@ -55,7 +54,6 @@ enum GameEvents {
 	DOWN_PRESSED,
 	LEFT_PRESSED,
 	RIGHT_PRESSED,
-
 	SPACE_PRESSED,
 	BACKSPACE_PRESSED,
 	ENTER_PRESSED,

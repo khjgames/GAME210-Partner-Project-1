@@ -297,7 +297,12 @@ void GameplayManager::Render(){
 	// render next frame / all game objects	
 	if (AtMenu == false) DrawScore();
 	else {
-		DrawMenu();
+		if (ViewingLeaderboard) {
+			DrawLeaderboard();
+		}
+		else {
+			DrawMenu();
+		}
 	}
 	GameObjectDrawer::DrawGameObjects(FirstGameObject);
 }
@@ -356,6 +361,15 @@ void GameplayManager::DrawMenu() {
 		}
 	}
 	else StartBtnString = "Start Game";
+
+	string lbtext = "Leaderboard";
+	if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 400, lbtext.size() * 18, 44) == true) {
+		lbtext = "> Leaderboard <";
+		if (EventHandler::MClicked(1) == true) {
+			ViewingLeaderboard = true;
+		}
+	}
+	Graphics::DrawText(lbtext.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 400, lbtext.size() * 18, 44, ArialFont);
 }
 
 void GameplayManager::DrawScore(){
@@ -365,4 +379,48 @@ void GameplayManager::DrawScore(){
 
 	string LevelString = "Level: " + to_string(Level);
 	Graphics::DrawText(LevelString.c_str(), 450, 20, LevelString.size() * 20, 50, ArialFont);
+}
+
+
+void GameplayManager::DrawHighScore() {
+	// draw the high score
+	string ScoreString = "High Score: " + to_string(lb.GetEntry(0).score);
+	Graphics::DrawText(ScoreString.c_str(), 500, 20, ScoreString.size() * 20, 50, ArialFont);
+}
+
+void GameplayManager::DrawLeaderboard() {
+	string TitleString = "Void Invaders";
+	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
+
+	const short CHAR_WIDTH = 20;
+	const short CHAR_HEIGHT = 35;
+
+	// get the size of the high score entry to get the leaderboard centered
+	int x = Graphics::WINDOW_WIDTH / 2 - (to_string(lb.GetEntry(0).score).size() * CHAR_WIDTH / 2 + MAX_NAME_SIZE * CHAR_WIDTH / 2 + CHAR_WIDTH / 2) ;
+	int y = 130;
+
+	// draw each entry in the leaderboard
+	for (int i = 0; i < MAX_ENTRIES; i++) {
+		LBEntry entry = lb.GetEntry(i);
+		Graphics::DrawText(entry.name,
+			x, y + i * CHAR_HEIGHT, MAX_NAME_SIZE * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+		string scoreString = to_string(entry.score);
+		Graphics::DrawText(scoreString.c_str(),
+			x + (MAX_NAME_SIZE + 1) * CHAR_WIDTH, y + i * CHAR_HEIGHT,
+			scoreString.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+	}
+
+	string buttonText = "BACK TO MENU";
+	if (MouseInRect(
+		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175
+		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT) == true) 
+	{
+		buttonText = "> BACK TO MENU <";
+		if (EventHandler::MClicked(1) == true) {
+			ViewingLeaderboard = false;
+		}
+	}
+	Graphics::DrawText(buttonText.c_str(),
+		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175
+		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
 }

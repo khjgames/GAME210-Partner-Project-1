@@ -2,6 +2,7 @@
 // creating a basic gameobject
 #include "../Objects/ColourBlock.h"
 #include "../GameObject.h"
+#include "../Leaderboard.h"
 #include <SDL_ttf.h>
 
 class GameplayManager {
@@ -23,8 +24,12 @@ private:
 
 	GameObject* AddGameObject(short x, short y, short type, bool visible);
 
+	Leaderboard lb = Leaderboard("");
+
 	int LastSpriteAnim;
 	void Init(); 
 	void DrawScore(); 
 	void DrawMenu();
+	void DrawHighScore();
+	void DrawLeaderboard();
 };
