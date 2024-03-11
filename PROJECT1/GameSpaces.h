@@ -20,7 +20,7 @@ namespace GameVars {
     long long TimePlayed = 0;
     int MenuTime = 0;
     short NumPlayers = 1;
-    short VoidBits = 2; // free void bits! so generous!
+    short VoidBits = 5; // free void bits! so generous! for you james!
     short SpriteInt = 0;
     short SpriteIntMax = 200; // Sprite animation interval
     int LastTick;
@@ -67,6 +67,8 @@ namespace GameVars {
         ShipSpeed = 3 + floor(OwnedUpgrades[0] * 1.25);
         ProjectileSpeed = 5 + floor(OwnedUpgrades[1] * 1.7);
         ProjSizeX = floor(5 * pow(1.2, OwnedUpgrades[2]));
+        ProjSizeX = ProjSizeX + min((short) 2, OwnedUpgrades[2]); // ^ Increases early
+        // level scaling without affecting late game by more than 2 pixels
         ProjSizeY = floor(ProjSizeX * 7 / 5);
     };
     //
