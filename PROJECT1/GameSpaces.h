@@ -17,6 +17,7 @@ namespace GameTime {
 
 namespace GameVars {
     //
+    long long TimePlayed = 0;
     short NumPlayers = 1;
     short VoidBits = 0;
     short SpriteInt = 0;
@@ -34,8 +35,9 @@ namespace GameVars {
     bool AdvancingLeft;
     bool AtMenu = true;
     bool AtShop = false;
-    short GameOver = 0;
+    bool GamePaused = false;
     bool ViewingLeaderboard = false;
+    short GameOver = 0;
     short ScorePlaced = 0;
     string PlayerName = "NAME";
     string NameEntry = "PlayerName: ";
@@ -90,6 +92,7 @@ namespace GameVars {
         }
         else {
             output << to_string(VoidBits) << ",";
+            output << to_string(TimePlayed) << ",";
             for (int num = 0; num < SHOP_UPGRADES; num++) {
                 output << to_string(OwnedUpgrades[num]) << ",";
             }
@@ -107,6 +110,13 @@ namespace GameVars {
 
             if ((found = line.find(',')) != std::string::npos) {
                 VoidBits = std::stoi(line.substr(0, found));
+                pos = found + 1;
+            }
+            
+            // Read the TimePlayed
+            found = line.find(',', pos);
+            if (found != std::string::npos) {
+                TimePlayed = std::stoll(line.substr(pos, found - pos));
                 pos = found + 1;
             }
 

@@ -1,6 +1,8 @@
 #include "GameplayManager.h"
 #include <ctime>
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 #include "../Graphics.h"
 // creating a basic gameobject
 #include "../Objects/ColourBlock.h"
@@ -183,168 +185,171 @@ void ToggleNumPlayers(GameObject* FirstGameObject){
 }
 
 void GameplayManager::Update(){
-	//
-	GameObject* CurGameObject = FirstGameObject;
-	GameObject* Player1 = nullptr;
-	GameObject* Player2 = nullptr;
-	GameObject* Player1Proj = nullptr;
-	GameObject* Player2Proj = nullptr;
-	//
-	int MinX = 9999; int MaxX = 0; int MaxX_W = 0; int LivingInvaders = 0; bool ReachedEdge = false; int AdvanceAmount = InvaderSpeed;
-	// Get the min max positions of all invaders.
+	if (GamePaused == false) {
+		//
+		GameObject* CurGameObject = FirstGameObject;
+		GameObject* Player1 = nullptr;
+		GameObject* Player2 = nullptr;
+		GameObject* Player1Proj = nullptr;
+		GameObject* Player2Proj = nullptr;
+		//
+		int MinX = 9999; int MaxX = 0; int MaxX_W = 0; int LivingInvaders = 0; bool ReachedEdge = false; int AdvanceAmount = InvaderSpeed;
+		// Get the min max positions of all invaders.
 
-	SpriteInt = (SpriteInt < SpriteIntMax) ? SpriteInt + 1 : 0;
+		SpriteInt = (SpriteInt < SpriteIntMax) ? SpriteInt + 1 : 0;
 
-	// ------------ ||
-	while (true) {
-		if (CurGameObject == nullptr) break;
-		GameObject* NextGameObject = CurGameObject->GetNext();
-		switch (CurGameObject->type) {
-		case GameObject::ObjectTypes::PLAYER_1:
-			Player1 = CurGameObject;
-			HandleInput(Player1);
-			break;
-		case GameObject::ObjectTypes::PLAYER_2:
-			Player2 = CurGameObject;
-			HandleInput(Player2);
-			break;
-		case GameObject::ObjectTypes::INVADER_1A: // Intentional fallthrough
-		case GameObject::ObjectTypes::INVADER_1B: // Intentional fallthrough
-		case GameObject::ObjectTypes::INVADER_2A: // Intentional fallthrough
-		case GameObject::ObjectTypes::INVADER_2B: // Intentional fallthrough
-		case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthroughD
-		case GameObject::ObjectTypes::INVADER_3B: // Call a function for all invader cases
-			if (SpriteInt == SpriteIntMax) {
-				if (CurGameObject->type % 2 == GameObject::ObjectTypes::INVADER_1A % 2) {
-					CurGameObject->type++; // Alternate sprite (animation)
-				}
-				else {
-					CurGameObject->type--;  // Alternate sprite (animation)
-				}
-			}
-			if (CurGameObject->visible == true) {
-				HandleInvader(CurGameObject, Player1Proj, Player2Proj);
-				MinX = min(MinX, CurGameObject->transform.x);
-				int TempMaxX = max(MaxX, CurGameObject->transform.x + CurGameObject->transform.w);
-				if (TempMaxX > MaxX){
-					MaxX = TempMaxX;
-					MaxX_W = CurGameObject->transform.w;
-				}
-				LivingInvaders++;
-				if (GameOver == 0){
-					if (CurGameObject->transform.y + CurGameObject->transform.h >= FirstGameObject->transform.y) GameOver = 1;
-				}
-			}
-			break;
-		case GameObject::ObjectTypes::UFO:
-			if (CurGameObject->visible == true){
-				HandleUFO(CurGameObject, Player1Proj, Player2Proj);
-			}
-			break;
-		case GameObject::ObjectTypes::PLAYER_1_PROJECTILE:
-			Player1Proj = CurGameObject;
-			ManageProjectile(Player1Proj, Player1);
-			break;
-		case GameObject::ObjectTypes::PLAYER_2_PROJECTILE:
-			Player2Proj = CurGameObject;
-			ManageProjectile(Player2Proj, Player2);
-			break;
-		}
-		//
-		if (NextGameObject == nullptr) break; // we reached the last object
-		else CurGameObject = NextGameObject;
-	}
-	//
-	if (LivingInvaders > 0){
-		//
-		for (int i = 1; i < LowSurvivors; i++){ // Move faster the fewer survivors < LowSurvivors there are.
-			if (LivingInvaders <= i) AdvanceAmount += AccelLowSurvivors;
-		}
-		//
-		if (AdvancingLeft == true) {
-			int TempMinX = max(0, MinX - AdvanceAmount);
-			if (TempMinX == 0) { 
-				ReachedEdge = true;
-				AdvanceAmount = dif(MinX, TempMinX);
-			}
-			AdvanceAmount = -AdvanceAmount;
-		}
-		else {
-			int TempMaxX = min(Graphics::WINDOW_WIDTH, MaxX + AdvanceAmount);
-			if (TempMaxX == Graphics::WINDOW_WIDTH) {  
-				ReachedEdge = true;
-				AdvanceAmount = dif(MaxX, TempMaxX);
-			}
-		}
-		//
-		CurGameObject = FirstGameObject;
-		while (true) {			
+		// ------------ ||
+		while (true) {
 			if (CurGameObject == nullptr) break;
 			GameObject* NextGameObject = CurGameObject->GetNext();
 			switch (CurGameObject->type) {
+			case GameObject::ObjectTypes::PLAYER_1:
+				Player1 = CurGameObject;
+				HandleInput(Player1);
+				break;
+			case GameObject::ObjectTypes::PLAYER_2:
+				Player2 = CurGameObject;
+				HandleInput(Player2);
+				break;
 			case GameObject::ObjectTypes::INVADER_1A: // Intentional fallthrough
 			case GameObject::ObjectTypes::INVADER_1B: // Intentional fallthrough
 			case GameObject::ObjectTypes::INVADER_2A: // Intentional fallthrough
 			case GameObject::ObjectTypes::INVADER_2B: // Intentional fallthrough
-			case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthrough
+			case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthroughD
 			case GameObject::ObjectTypes::INVADER_3B: // Call a function for all invader cases
+				if (SpriteInt == SpriteIntMax) {
+					if (CurGameObject->type % 2 == GameObject::ObjectTypes::INVADER_1A % 2) {
+						CurGameObject->type++; // Alternate sprite (animation)
+					}
+					else {
+						CurGameObject->type--;  // Alternate sprite (animation)
+					}
+				}
 				if (CurGameObject->visible == true) {
-					CurGameObject->transform.x += AdvanceAmount;
-					if (ReachedEdge == true) CurGameObject->transform.y += DistPerAdvance;
+					HandleInvader(CurGameObject, Player1Proj, Player2Proj);
+					MinX = min(MinX, CurGameObject->transform.x);
+					int TempMaxX = max(MaxX, CurGameObject->transform.x + CurGameObject->transform.w);
+					if (TempMaxX > MaxX) {
+						MaxX = TempMaxX;
+						MaxX_W = CurGameObject->transform.w;
+					}
+					LivingInvaders++;
+					if (GameOver == 0) {
+						if (CurGameObject->transform.y + CurGameObject->transform.h >= FirstGameObject->transform.y) GameOver = 1;
+					}
 				}
 				break;
 			case GameObject::ObjectTypes::UFO:
-				if (SpawnedUFOs < Level && LivingInvaders >= 27 && LivingInvaders <= 36){
-					SpawnedUFOs++; 
-					CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
-					CurGameObject->visible = true;
+				if (CurGameObject->visible == true) {
+					HandleUFO(CurGameObject, Player1Proj, Player2Proj);
 				}
-				if (CurGameObject->visible == false && OwnedUpgrades[3] >= 4 && ExtraSpawnedUFOs < Level && LivingInvaders >= 5 && LivingInvaders <= 18) { //UFO Study Tier 4 upgrade
-					ExtraSpawnedUFOs++;
-					CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
-					CurGameObject->visible = true;
-				}
+				break;
+			case GameObject::ObjectTypes::PLAYER_1_PROJECTILE:
+				Player1Proj = CurGameObject;
+				ManageProjectile(Player1Proj, Player1);
+				break;
+			case GameObject::ObjectTypes::PLAYER_2_PROJECTILE:
+				Player2Proj = CurGameObject;
+				ManageProjectile(Player2Proj, Player2);
+				break;
 			}
 			//
 			if (NextGameObject == nullptr) break; // we reached the last object
 			else CurGameObject = NextGameObject;
 		}
 		//
-		if (ReachedEdge == true) {
-			InvaderSpeed += AccelPerAdvance;
-			AdvancingLeft = !AdvancingLeft;
+		if (LivingInvaders > 0) {
+			//
+			for (int i = 1; i < LowSurvivors; i++) { // Move faster the fewer survivors < LowSurvivors there are.
+				if (LivingInvaders <= i) AdvanceAmount += AccelLowSurvivors;
+			}
+			//
+			if (AdvancingLeft == true) {
+				int TempMinX = max(0, MinX - AdvanceAmount);
+				if (TempMinX == 0) {
+					ReachedEdge = true;
+					AdvanceAmount = dif(MinX, TempMinX);
+				}
+				AdvanceAmount = -AdvanceAmount;
+			}
+			else {
+				int TempMaxX = min(Graphics::WINDOW_WIDTH, MaxX + AdvanceAmount);
+				if (TempMaxX == Graphics::WINDOW_WIDTH) {
+					ReachedEdge = true;
+					AdvanceAmount = dif(MaxX, TempMaxX);
+				}
+			}
+			//
+			CurGameObject = FirstGameObject;
+			while (true) {
+				if (CurGameObject == nullptr) break;
+				GameObject* NextGameObject = CurGameObject->GetNext();
+				switch (CurGameObject->type) {
+				case GameObject::ObjectTypes::INVADER_1A: // Intentional fallthrough
+				case GameObject::ObjectTypes::INVADER_1B: // Intentional fallthrough
+				case GameObject::ObjectTypes::INVADER_2A: // Intentional fallthrough
+				case GameObject::ObjectTypes::INVADER_2B: // Intentional fallthrough
+				case GameObject::ObjectTypes::INVADER_3A: // Intentional fallthrough
+				case GameObject::ObjectTypes::INVADER_3B: // Call a function for all invader cases
+					if (CurGameObject->visible == true) {
+						CurGameObject->transform.x += AdvanceAmount;
+						if (ReachedEdge == true) CurGameObject->transform.y += DistPerAdvance;
+					}
+					break;
+				case GameObject::ObjectTypes::UFO:
+					if (SpawnedUFOs < Level && LivingInvaders >= 27 && LivingInvaders <= 36) {
+						SpawnedUFOs++;
+						CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
+						CurGameObject->visible = true;
+					}
+					if (CurGameObject->visible == false && OwnedUpgrades[3] >= 4 && ExtraSpawnedUFOs < Level && LivingInvaders >= 5 && LivingInvaders <= 18) { //UFO Study Tier 4 upgrade
+						ExtraSpawnedUFOs++;
+						CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
+						CurGameObject->visible = true;
+					}
+				}
+				//
+				if (NextGameObject == nullptr) break; // we reached the last object
+				else CurGameObject = NextGameObject;
+			}
+			//
+			if (ReachedEdge == true) {
+				InvaderSpeed += AccelPerAdvance;
+				AdvancingLeft = !AdvancingLeft;
+			}
+			//
+		}
+		else {
+			if (AtMenu == false) { // You beat the current level
+				Level++; VoidBits += floor(Level * 1.5);
+				short NumInvade = 11;
+				short NumWaves = 6 + floor(Level / 4);
+				if (Level % 2 == 0) NumInvade = 12;
+				if (Level % 4 == 1) {
+					InvaderSpeed++;
+				}
+				if (Level % 3 == 0) {
+					LowSurvivors++; NumInvade = 13;
+				}
+				if (Level % 6 == 0) {
+					AccelLowSurvivors++;
+				}
+				if (Level % 3 == 1) {
+					AccelPerAdvance += 0.5;
+				}
+				LoadLevel(52, 52, NumInvade, NumWaves); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+			}
+		}
+		// ------------ ||
+
+		if (GameOver == 1) {
+			if (Player1Proj != nullptr && Player2Proj != nullptr && Player1Proj->visible == false && Player2Proj->visible == false) {
+				GameOver = 2;
+			}
 		}
 		//
+		if (GamePaused == false && AtMenu == false && AtShop == false && ViewingLeaderboard == false && GameOver == 0) TimePlayed += dif(tick(), LastTick);
 	}
-	else { 
-		if (AtMenu == false) { // You beat the current level
-			Level++; VoidBits += floor(Level*1.5);
-			short NumInvade = 11;
-			short NumWaves = 6 + floor(Level / 4);
-			if (Level % 2 == 0) NumInvade = 12;
-			if (Level % 4 == 1) {
-				InvaderSpeed++;
-			}
-			if (Level % 3 == 0) {
-				LowSurvivors++; NumInvade = 13;
-			}
-			if (Level % 6 == 0) {
-				AccelLowSurvivors++;
-			}
-			if (Level % 3 == 1) {
-				AccelPerAdvance += 0.5;
-			}
-			LoadLevel(52, 52, NumInvade, NumWaves); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
-		}
-	}
-	// ------------ ||
-
-	if (GameOver == 1){
-		if (Player1Proj != nullptr && Player2Proj != nullptr && Player1Proj->visible == false && Player2Proj->visible == false) {
-			GameOver = 2;
-		}
-	}
-	//
 	LastTick = tick();
 }
 
@@ -353,6 +358,11 @@ void GameplayManager::Render(){
 	//
 	string VoidBitsString = "Void Bits: " + to_string(VoidBits);
 	Graphics::DrawText(VoidBitsString.c_str(), Graphics::WINDOW_WIDTH - VoidBitsString.size() * 25, 20, VoidBitsString.size() * 15, 40, ArialFont);
+	//
+	ostringstream format_timeplayed_str;
+	format_timeplayed_str << "Time Played: " << fixed << setprecision(2) << ((float)TimePlayed) / 1000.0f / 60.0f;
+	std::string TimePlayedString = format_timeplayed_str.str();
+	Graphics::DrawText(TimePlayedString.c_str(), Graphics::WINDOW_WIDTH - TimePlayedString.size() * 18, 60, TimePlayedString.size() * 10, 25, ArialFont);
 	//
 	if (AtMenu == false) DrawScore();
 	else {
@@ -511,7 +521,23 @@ void GameplayManager::DrawScore(){
 
 	string HighScoreString = "High Score: " + to_string(lb.GetEntry(0, NumPlayers - 1).score);
 	Graphics::DrawText(HighScoreString.c_str(), 50, 60, HighScoreString.size() * 10, 25, ArialFont);
+	//
+	
+	if (EventHandler::KeyHit(GameEvents::ESCAPE_PRESSED)) {
+		if (GamePaused == false && AtMenu == false && AtShop == false && ViewingLeaderboard == false && GameOver == 0) GamePaused = true;
+		else GamePaused = false;
+	}
 
+	if (GamePaused == false) {
+
+		string PauseString = "Pause (ESC)";
+		Graphics::DrawText(PauseString.c_str(), Graphics::WINDOW_WIDTH / 2 - PauseString.size() * 5, 50, PauseString.size() * 10, 25, ArialFont);
+	}
+	else {
+		string PauseString = "GAME PAUSED (ESC)";
+		Graphics::DrawText(PauseString.c_str(), Graphics::WINDOW_WIDTH / 2 - PauseString.size() * 10, 50, PauseString.size() * 20, 50, ArialFont);
+	}
+	//
 	if (GameOver >= 1) {
 		string GameOverString = "GAME OVER.";
 		Graphics::DrawText(GameOverString.c_str(), Graphics::WINDOW_WIDTH / 2 - 18 * GameOverString.size(), 110, GameOverString.size() * 36, 80, ArialFont);

@@ -256,6 +256,11 @@ bool EventHandler::Update() {
 			SetButton(GameEvents::ENTER_PRESSED, currEvents.key.type == SDL_KEYDOWN);
 			break;
 		}
+		case SDLK_ESCAPE:
+		{
+			SetButton(GameEvents::ESCAPE_PRESSED, currEvents.key.type == SDL_KEYDOWN);
+			break;
+		}
 		}
 		//
 		switch (currEvents.type) {
