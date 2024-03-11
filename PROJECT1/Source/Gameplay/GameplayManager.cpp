@@ -81,6 +81,10 @@ void MoveProjectile(GameObject* ProjGameObject) {
 }
 
 void ManageProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject) {
+	if (ProjGameObject->transform.w != ProjSizeX) {
+		ProjGameObject->transform.w = ProjSizeX;
+		ProjGameObject->transform.h = ProjSizeY;
+	}
 	MoveProjectile(ProjGameObject);
 	if (GameOver == 0) { // Can't shoot on GameOver
 		switch (ProjGameObject->type) {
@@ -133,12 +137,20 @@ void HandleInvader(GameObject* InvaderGameObject, GameObject* Player1Proj, GameO
 }
 
 void HandleUFO(GameObject* UFOGameObject, GameObject* Player1Proj, GameObject* Player2Proj) {
-	UFOGameObject->transform.x -= 2+InvaderSpeed;
+	short UFOSpeed = 2 + InvaderSpeed;
+	if (OwnedUpgrades[3] >= 1) UFOSpeed -= 1; //UFO Study Tier 1 upgrade
+	if (OwnedUpgrades[3] >= 2) UFOSpeed -= 1; //UFO Study Tier 2 upgrade
+	UFOGameObject->transform.x -= UFOSpeed;
 	if ((Player1Proj->visible == true) && ObjectsCollide(UFOGameObject, Player1Proj)) {
-		Player1Proj->visible = false; UFOGameObject->visible = false; Score += 100; VoidBits += 2 + floor(Level/2);
+		Player1Proj->visible = false; UFOGameObject->visible = false; 
+		if (OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
+			Score += 50; VoidBits += floor(Level);
+		}
+		Score += 100; VoidBits += 2 + floor(Level);
 	}
 	if ((Player2Proj->visible == true) && ObjectsCollide(UFOGameObject, Player2Proj)) {
-		Player2Proj->visible = false; UFOGameObject->visible = false; Score += 100; VoidBits += 2 + floor(Level/2);
+		Player2Proj->visible = false; UFOGameObject->visible = false; 
+		Score += 100; VoidBits += 2 + floor(Level);
 	}
 }
 
@@ -278,8 +290,13 @@ void GameplayManager::Update(){
 				}
 				break;
 			case GameObject::ObjectTypes::UFO:
-				if (SpawnedUFOs < Level && LivingInvaders >= 23 && LivingInvaders <= 32){
+				if (SpawnedUFOs < Level && LivingInvaders >= 27 && LivingInvaders <= 36){
 					SpawnedUFOs++; 
+					CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
+					CurGameObject->visible = true;
+				}
+				if (CurGameObject->visible == false && OwnedUpgrades[3] >= 4 && ExtraSpawnedUFOs < Level && LivingInvaders >= 5 && LivingInvaders <= 18) { //UFO Study Tier 4 upgrade
+					ExtraSpawnedUFOs++;
 					CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
 					CurGameObject->visible = true;
 				}
@@ -297,7 +314,7 @@ void GameplayManager::Update(){
 	}
 	else { 
 		if (AtMenu == false) { // You beat the current level
-			VoidBits += Level; Level++;
+			Level++; VoidBits += Level;
 			short NumInvade = 13;
 			short NumWaves = 6 + floor(Level / 4);
 			if (Level % 2 == 0) NumInvade = 14;
@@ -422,14 +439,53 @@ void GameplayManager::DrawMenu() {
 		Graphics::DrawText(lbtext.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 460, lbtext.size() * 18, 44, ArialFont);
 	}
 	else {
-		Graphics::DrawText(ExitShopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 380, ExitShopBtnString.size() * 18, 44, ArialFont);
-		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 380, ExitShopBtnString.size() * 18, 44) == true) {
+		Graphics::DrawText(ExitShopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 475, ExitShopBtnString.size() * 18, 44, ArialFont);
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 475, ExitShopBtnString.size() * 18, 44) == true) {
 			ExitShopBtnString = "> Exit Shop <";
 			if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true) {
 				AtShop = false;
 			}
 		}
 		else ExitShopBtnString = "Exit Shop";
+
+		for (short i = 0; i < SHOP_UPGRADES; i++){
+			short u = OwnedUpgrades[i];
+			short UpgCost = floor((UpgradeCosts[u] + (10 * i)) * (1 + ((float)i / 10.0f)));
+			string ShopUpgradeString = UpgradeNames[i] + " " + to_string(u) + " [MAXXED]";
+			//
+			if (u < MaxUpgrades[i]) { // If any more can be purchased
+				ShopUpgradeString = UpgradeNames[i] + " " + to_string(u) + " [" + to_string(UpgCost) + "]";
+				Graphics::DrawText(ShopBuyStrings[i].c_str(), Graphics::WINDOW_WIDTH / 2 + 75 - ShopBuyStrings[i].size() * 9, 133 + 80 * i, ShopBuyStrings[i].size() * 18, 44, ArialFont);
+				//
+				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 75 - ShopBuyStrings[i].size() * 9, 133 + 80 * i, ShopBuyStrings[i].size() * 18, 44) == true) {
+					ShopBuyStrings[i] = "> Buy <";
+					if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true && VoidBits >= UpgCost) {
+						VoidBits -= UpgCost;
+						OwnedUpgrades[i]++;
+						ApplyUpgrades();
+					}
+				}
+				else ShopBuyStrings[i] = "Buy";
+			}
+			//
+			Graphics::DrawText(ShopUpgradeString.c_str(), Graphics::WINDOW_WIDTH / 3 + 50 - 9 * ShopUpgradeString.size(), 133 + 80 * i, ShopUpgradeString.size() * 18, 44, ArialFont);
+			//
+			if (u > 0) { // If any can be refunded
+				Graphics::DrawText(ShopRefundStrings[i].c_str(), Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 133 + 80 * i, ShopRefundStrings[i].size() * 18, 44, ArialFont);
+				//
+				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 133 + 80 * i, ShopRefundStrings[i].size() * 18, 44) == true) {
+					ShopRefundStrings[i] = "> Refund <";
+					if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true) {
+						VoidBits += floor((UpgradeCosts[(u - 1)] + (10 * i)) * (1 + ((float)i / 10.0f)));
+						OwnedUpgrades[i]--;
+						ApplyUpgrades();
+					}
+				}
+				else ShopRefundStrings[i] = "Refund";
+			}
+			//
+		}
+
 	}
 	//
 }
