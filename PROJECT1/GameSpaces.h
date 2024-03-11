@@ -17,7 +17,7 @@ namespace GameTime {
 
 namespace GameVars {
     //
-    short NumPlayers = 2;
+    short NumPlayers = 1;
     short VoidBits = 0;
     short SpriteInt = 0;
     short SpriteIntMax = 200; // Sprite animation interval
