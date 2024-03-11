@@ -3,8 +3,6 @@
 #include "../Graphics.h"
 #include "Gameplay/GameplayManager.h"
 
-// GameState
-bool GameRunning = true;
 // argc and argv here are command line parameters passed to the program when running the program. 
 // we won't actually use them but our 2D Graphics Library requires the main setup like this.
 // Argc: the number of arguments pass
@@ -19,10 +17,10 @@ int main( int argc, char *argv[] )
 	GameplayManager Game;
 
 	// Main game loop
-	while (GameRunning) 
+	while (Game.run) 
 	{
 		// handle button events
-		GameRunning = EventHandler::Update();
+		Game.run = EventHandler::Update();
 		Game.Update();
 
 		Graphics::StartRender();

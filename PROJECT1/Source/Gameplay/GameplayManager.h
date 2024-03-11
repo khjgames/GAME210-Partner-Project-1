@@ -15,6 +15,7 @@ public:
 	void LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS);
 
 	TTF_Font* ArialFont;
+	bool run = true;
 private: 
 	void InitGameObjects();
 	void DeleteGameObjects();
