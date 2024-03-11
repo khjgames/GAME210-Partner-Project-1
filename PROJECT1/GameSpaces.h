@@ -65,6 +65,8 @@ namespace GameVars {
         ProjectileSpeed = 5 + floor(OwnedUpgrades[1] * 1.7);
         ProjSizeX = floor(5 * pow(1.2, OwnedUpgrades[2]));
         ProjSizeY = floor(ProjSizeX * 7 / 5);
+        //
+        SaveGame();
     };
     //
     void InitGameVars() {
