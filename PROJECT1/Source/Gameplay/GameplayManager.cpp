@@ -315,14 +315,14 @@ void GameplayManager::Update(){
 	else { 
 		if (AtMenu == false) { // You beat the current level
 			Level++; VoidBits += Level;
-			short NumInvade = 13;
+			short NumInvade = 11;
 			short NumWaves = 6 + floor(Level / 4);
-			if (Level % 2 == 0) NumInvade = 14;
+			if (Level % 2 == 0) NumInvade = 12;
 			if (Level % 4 == 1) {
 				InvaderSpeed++;
 			}
 			if (Level % 3 == 0) {
-				LowSurvivors++; NumInvade = 15;
+				LowSurvivors++; NumInvade = 13;
 			}
 			if (Level % 6 == 0) {
 				AccelLowSurvivors++;
@@ -450,7 +450,7 @@ void GameplayManager::DrawMenu() {
 
 		for (short i = 0; i < SHOP_UPGRADES; i++){
 			short u = OwnedUpgrades[i];
-			short UpgCost = floor((UpgradeCosts[u] + (10 * i)) * (1 + ((float)i / 10.0f)));
+			short UpgCost = floor(((UpgradeCosts[u] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.8);
 			string ShopUpgradeString = UpgradeNames[i] + " " + to_string(u) + " [MAXXED]";
 			//
 			if (u < MaxUpgrades[i]) { // If any more can be purchased
@@ -476,7 +476,7 @@ void GameplayManager::DrawMenu() {
 				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 133 + 80 * i, ShopRefundStrings[i].size() * 18, 44) == true) {
 					ShopRefundStrings[i] = "> Refund <";
 					if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true) {
-						VoidBits += floor((UpgradeCosts[(u - 1)] + (10 * i)) * (1 + ((float)i / 10.0f)));
+						VoidBits += floor(((UpgradeCosts[(u - 1)] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.8);
 						OwnedUpgrades[i]--;
 						ApplyUpgrades();
 					}
