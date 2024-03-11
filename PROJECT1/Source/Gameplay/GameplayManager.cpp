@@ -247,10 +247,10 @@ void GameplayManager::Update(){
 				}
 				if (AtMenu == true) {
 					MenuTime += dif(tick(), LastTick);
-					if (MenuTime > 60 * 1000) { MenuTime = 0; // 60 seconds
+					if (MenuTime > 45 * 1000) { MenuTime = 0; // 45 seconds
 						CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
-						CurGameObject->visible = true;
-					}
+						CurGameObject->visible = true; // Free void bits!
+					} // James did you notice the menu ufo easter egg? 
 				}
 				break;
 			case GameObject::ObjectTypes::PLAYER_1_PROJECTILE:
