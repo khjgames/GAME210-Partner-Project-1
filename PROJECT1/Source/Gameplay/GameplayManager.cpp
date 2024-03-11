@@ -352,7 +352,7 @@ void GameplayManager::Render(){
 	// render next frame / all game objects	
 	//
 	string VoidBitsString = "Void Bits: " + to_string(VoidBits);
-	Graphics::DrawText(VoidBitsString.c_str(), Graphics::WINDOW_WIDTH - VoidBitsString.size() * 25, 20, VoidBitsString.size() * 20, 50, ArialFont);
+	Graphics::DrawText(VoidBitsString.c_str(), Graphics::WINDOW_WIDTH - VoidBitsString.size() * 25, 20, VoidBitsString.size() * 15, 40, ArialFont);
 	//
 	if (AtMenu == false) DrawScore();
 	else {
@@ -504,13 +504,13 @@ void GameplayManager::DrawMenu() {
 void GameplayManager::DrawScore(){
 	// draw the score
 	string ScoreString = "Score: " + to_string(Score);
-	Graphics::DrawText(ScoreString.c_str(), 150, 20, ScoreString.size() * 20, 50, ArialFont);
+	Graphics::DrawText(ScoreString.c_str(), 50, 20, ScoreString.size() * 15, 40, ArialFont);
 
 	string LevelString = "Level: " + to_string(Level);
-	Graphics::DrawText(LevelString.c_str(), 450, 20, LevelString.size() * 20, 50, ArialFont);
+	Graphics::DrawText(LevelString.c_str(), 300, 20, LevelString.size() * 15, 40, ArialFont);
 
-	/*string HighScoreString = "High Score: " + to_string(lb.GetEntry(0).score);
-	Graphics::DrawText(HighScoreString.c_str(), 500, 20, HighScoreString.size() * 20, 50, ArialFont);*/
+	string HighScoreString = "High Score: " + to_string(lb.GetEntry(0).score);
+	Graphics::DrawText(HighScoreString.c_str(), 50, 60, HighScoreString.size() * 10, 25, ArialFont);
 
 	if (GameOver >= 1) {
 		string GameOverString = "GAME OVER.";
