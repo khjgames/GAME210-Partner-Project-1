@@ -361,6 +361,15 @@ void GameplayManager::DrawMenu() {
 		}
 	}
 	else StartBtnString = "Start Game";
+
+	string lbtext = "Leaderboard";
+	if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 400, lbtext.size() * 18, 44) == true) {
+		lbtext = "> Leaderboard <";
+		if (EventHandler::MClicked(1) == true) {
+			ViewingLeaderboard = true;
+		}
+	}
+	Graphics::DrawText(lbtext.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 400, lbtext.size() * 18, 44, ArialFont);
 }
 
 void GameplayManager::DrawScore(){
@@ -402,12 +411,16 @@ void GameplayManager::DrawLeaderboard() {
 	}
 
 	string buttonText = "BACK TO MENU";
-	Graphics::DrawText(buttonText.c_str(),
-		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175 
-		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
-	if (EventHandler::MClicked(1) == true && MouseInRect(
+	if (MouseInRect(
 		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175
-		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT) == true) {
-		ViewingLeaderboard = false;
+		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT) == true) 
+	{
+		buttonText = "> BACK TO MENU <";
+		if (EventHandler::MClicked(1) == true) {
+			ViewingLeaderboard = false;
 		}
+	}
+	Graphics::DrawText(buttonText.c_str(),
+		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175
+		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
 }
