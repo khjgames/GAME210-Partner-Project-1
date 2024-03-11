@@ -464,6 +464,7 @@ void GameplayManager::DrawMenu() {
 						VoidBits -= UpgCost;
 						OwnedUpgrades[i]++;
 						ApplyUpgrades();
+						SaveGame();
 					}
 				}
 				else ShopBuyStrings[i] = "Buy";
@@ -480,6 +481,7 @@ void GameplayManager::DrawMenu() {
 						VoidBits += floor(((UpgradeCosts[(u - 1)] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.8);
 						OwnedUpgrades[i]--;
 						ApplyUpgrades();
+						SaveGame();
 					}
 				}
 				else ShopRefundStrings[i] = "Refund";
