@@ -504,12 +504,15 @@ void GameplayManager::DrawScore(){
 	string LevelString = "Level: " + to_string(Level);
 	Graphics::DrawText(LevelString.c_str(), 450, 20, LevelString.size() * 20, 50, ArialFont);
 
+	/*string HighScoreString = "High Score: " + to_string(lb.GetEntry(0).score);
+	Graphics::DrawText(HighScoreString.c_str(), 500, 20, HighScoreString.size() * 20, 50, ArialFont);*/
+
 	if (GameOver >= 1) {
 		string GameOverString = "GAME OVER.";
 		Graphics::DrawText(GameOverString.c_str(), Graphics::WINDOW_WIDTH / 2 - 18 * GameOverString.size(), 110, GameOverString.size() * 36, 80, ArialFont);
 		if (GameOver == 2) { 
 			GameOver = 3;
-			ScorePlaced = lb.AddEntry(PlayerName.c_str(), Score);
+			ScorePlaced = lb.AddEntry(PlayerName.c_str(), Score, NumPlayers - 1);
 			lb.Save();
 			SaveGame();
 		}
@@ -544,13 +547,6 @@ void GameplayManager::DrawScore(){
 	}
 }
 
-
-void GameplayManager::DrawHighScore() {
-	// draw the high score
-	string ScoreString = "High Score: " + to_string(lb.GetEntry(0).score);
-	Graphics::DrawText(ScoreString.c_str(), 500, 20, ScoreString.size() * 20, 50, ArialFont);
-}
-
 void GameplayManager::DrawLeaderboard() {
 	string TitleString = "Void Invaders";
 	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
@@ -559,10 +555,15 @@ void GameplayManager::DrawLeaderboard() {
 	const short CHAR_HEIGHT = 35;
 
 	// get the size of the high score entry to get the leaderboard centered
-	int x = Graphics::WINDOW_WIDTH / 2 - (to_string(lb.GetEntry(0).score).size() * CHAR_WIDTH / 2 + MAX_NAME_SIZE * CHAR_WIDTH / 2 + CHAR_WIDTH / 2) ;
-	int y = 130;
+	int largestScoreSize = (to_string(lb.GetEntry(0).score).size() > to_string(lb.GetEntry(0, TWO_PLAYER).score).size()) ?
+		to_string(lb.GetEntry(0).score).size() :
+		to_string(lb.GetEntry(0, TWO_PLAYER).score).size();
+	int x = Graphics::WINDOW_WIDTH / 4 - (largestScoreSize * CHAR_WIDTH / 2 + MAX_NAME_SIZE * CHAR_WIDTH / 2 + CHAR_WIDTH / 2) ;
+	int y = 170;
 
-	// draw each entry in the leaderboard
+	// draw each entry in the 1 player leaderboard with title
+	string onePlayerTitle = "1 Player";
+	Graphics::DrawText(onePlayerTitle.c_str(), Graphics::WINDOW_WIDTH * 0.25 - onePlayerTitle.size() * CHAR_WIDTH / 2, y - 50, onePlayerTitle.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
 	for (int i = 0; i < MAX_ENTRIES; i++) {
 		LBEntry entry = lb.GetEntry(i);
 		Graphics::DrawText(entry.name,
@@ -573,9 +574,23 @@ void GameplayManager::DrawLeaderboard() {
 			scoreString.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
 	}
 
+	// draw each entry in the 2 player leaderboard with title
+	string twoPlayerTitle = "2 Player";
+	Graphics::DrawText(twoPlayerTitle.c_str(), Graphics::WINDOW_WIDTH * 0.75 - twoPlayerTitle.size() * CHAR_WIDTH / 2, y - 50, twoPlayerTitle.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+	x += Graphics::WINDOW_WIDTH / 2;
+	for (int i = 0; i < MAX_ENTRIES; i++) {
+		LBEntry entry = lb.GetEntry(i, TWO_PLAYER);
+		Graphics::DrawText(entry.name,
+			x, y + i * CHAR_HEIGHT, MAX_NAME_SIZE * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+		string scoreString = to_string(entry.score);
+		Graphics::DrawText(scoreString.c_str(),
+			x + (MAX_NAME_SIZE + 1) * CHAR_WIDTH, y + i * CHAR_HEIGHT,
+			scoreString.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
+	}
+
 	string buttonText = "BACK TO MENU";
 	if (MouseInRect(
-		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175
+		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 125
 		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT) == true) 
 	{
 		buttonText = "> BACK TO MENU <";
@@ -584,6 +599,6 @@ void GameplayManager::DrawLeaderboard() {
 		}
 	}
 	Graphics::DrawText(buttonText.c_str(),
-		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 175
+		Graphics::WINDOW_WIDTH / 2 - buttonText.size() * CHAR_WIDTH / 2, Graphics::WINDOW_HEIGHT - 125
 		- CHAR_HEIGHT, buttonText.size() * CHAR_WIDTH, CHAR_HEIGHT, ArialFont);
 }

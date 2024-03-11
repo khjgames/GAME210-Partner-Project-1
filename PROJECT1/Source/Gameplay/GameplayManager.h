@@ -30,6 +30,5 @@ private:
 	void Init(); 
 	void DrawScore(); 
 	void DrawMenu();
-	void DrawHighScore();
 	void DrawLeaderboard();
 };

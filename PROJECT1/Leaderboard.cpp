@@ -26,10 +26,9 @@ Leaderboard::Leaderboard(const char* fn)
 	}
 	else
 	{
-		// the format for leaderboard entries when they are saved is NAME1_SCORE1;NAME2_SCORE2...
-
 		bool onName = true;						// for tracking if currently reading a name
 		short index = 0;						// current entry being writen to
+		short leaderboardIndex = 0;				// current leaderboard being written to
 		short letTrack = 0;						// tracking how many letters have been entered
 		char numAscii[MAX_SCORE_SIZE] = "";		// char entry for the score
 
@@ -42,7 +41,7 @@ Leaderboard::Leaderboard(const char* fn)
 			if (currLetter == NAME_TERMINATE)
 			{
 				// add terminating char to name
-				Entries[index].name[letTrack] = '\0';
+				Entries[leaderboardIndex][index].name[letTrack] = '\0';
 
 				onName = false;
 				letTrack = 0;
@@ -55,12 +54,28 @@ Leaderboard::Leaderboard(const char* fn)
 				numAscii[letTrack] = '\0';
 				
 				// turn numAscii into an int and put into entry
-				Entries[index].score = atoi(numAscii);
+				Entries[leaderboardIndex][index].score = atoi(numAscii);
 				
 				onName = true;
 				letTrack = 0;
 				index++;
 				currLetter = input.get();
+			}
+			
+			// check for leaderboard change
+			if (currLetter == LEADERBOARD_INCREMENT)
+			{	
+				index = 0;
+				leaderboardIndex++;
+				currLetter = input.get();
+				
+				// check if there are too many leaderboards in the file
+				if (leaderboardIndex > NUM_LEADERBOARDS)
+				{
+					printf("Save file contains too many leaderboards. Using default values.\n");
+					FillDefault();
+					break;
+				}
 			}
 
 			// check for eof
@@ -91,7 +106,7 @@ Leaderboard::Leaderboard(const char* fn)
 				else
 				{
 					// copy character into entry
-					Entries[index].name[letTrack] = currLetter;
+					Entries[leaderboardIndex][index].name[letTrack] = currLetter;
 					letTrack++;
 				}
 			}
@@ -112,20 +127,27 @@ Leaderboard::Leaderboard(const char* fn)
 				}
 			}
 		}
+
+		// check for the correct amount of leaderboards
+		if (leaderboardIndex != NUM_LEADERBOARDS)
+		{
+			printf("Save file dosen't contain enough leaderboards. Using default values.\n");
+			FillDefault();
+		}
 	}
 	input.close();
 }
 
-LBEntry Leaderboard::GetEntry(int index)
+LBEntry Leaderboard::GetEntry(int index, int leaderboard)
 {
-	return Entries[index];
+	return Entries[leaderboard][index];
 }
 
-short Leaderboard::AddEntry(const char* name, int score)
+short Leaderboard::AddEntry(const char* name, int score, int leaderboard)
 {
 	// compare the score passed in to the entries in the leaderboard from bottom to top
 	int placement = MAX_ENTRIES;
-	while (Entries[placement - 1].score < score && placement != 0) { placement--; }
+	while (Entries[leaderboard][placement - 1].score < score && placement != 0) { placement--; }
 
 	// check that the score should be added into the leaderboard
 	if (placement != MAX_ENTRIES)
@@ -133,30 +155,30 @@ short Leaderboard::AddEntry(const char* name, int score)
 		// move other entries down to make room for the new entry
 		for (int i = MAX_ENTRIES - 2; i >= placement; i--)
 		{
-			Entries[i + 1] = Entries[i];
+			Entries[leaderboard][i + 1] = Entries[leaderboard][i];
+		}
+
+		// check if the name is empty, and fill it if it is
+		if (name[0] == '\0')
+		{
+			name = "NAME";
 		}
 
 		// insert name into the new entry
 		int c = 0;
 		while (name[c] != '\0' && c < MAX_NAME_SIZE)
 		{
-			Entries[placement].name[c] = name[c];
+			Entries[leaderboard][placement].name[c] = name[c];
 			c++;
 		}
-		Entries[placement].name[c] = '\0';
+		Entries[leaderboard][placement].name[c] = '\0';
 
 		// insert score into new entry
-		Entries[placement].score = score;
+		Entries[leaderboard][placement].score = score;
 	}
 	short place = (placement > MAX_ENTRIES) ? 0 : placement + 1; // return first through tenth place, or 0 if not placed
 
 	return place;
-}
-
-bool Leaderboard::IsWorthy(int score)
-{
-	// compare the value passed in to see if it's in the top scores
-	return score > Entries[MAX_ENTRIES - 1].score;
 }
 
 void Leaderboard::Save()
@@ -170,28 +192,44 @@ void Leaderboard::Save()
 	}
 	else
 	{
-		// loop through entries and write them to the save file
-		for (int i = 0; i < MAX_ENTRIES; i++)
+		// go through all leaderboards
+		for (int l = 0; l < NUM_LEADERBOARDS; l++)
 		{
-			// copy over the name
-			for (int let = 0; let < MAX_NAME_SIZE; let++)
+			// loop through entries and write them to the save files
+			for (int i = 0; i < MAX_ENTRIES; i++)
 			{
-				if (Entries[i].name[let] == '\0')
-					break;
+				// check if the name is empty, and fill it if it is
+				if (Entries[l][i].name[0] == '\0')
+				{
+					Entries[l][i].name[0] = 'N';
+					Entries[l][i].name[1] = 'A';
+					Entries[l][i].name[2] = 'M';
+					Entries[l][i].name[3] = 'E';
+				}
+				
+				// copy over the name
+				for (int let = 0; let < MAX_NAME_SIZE; let++)
+				{
+					if (Entries[l][i].name[let] == '\0')
+						break;
 
-				output << Entries[i].name[let];
+					output << Entries[l][i].name[let];
+				}
+
+				// add a name terminator
+				output << NAME_TERMINATE;
+
+				// copy over the score
+				char temp[MAX_SCORE_SIZE] = "";
+				_itoa_s(Entries[l][i].score, temp, 10);
+				output << temp;
+
+				// add a score terminator
+				output << SCORE_TERMINATE;
 			}
 
-			// add a name terminator
-			output << NAME_TERMINATE;
-
-			// copy over the score
-			char temp[MAX_SCORE_SIZE] = "";
-			_itoa_s(Entries[i].score, temp, 10);
-			output << temp;
-
-			// add a score terminator
-			output << SCORE_TERMINATE;
+			// add a leaderboard increment
+			output << LEADERBOARD_INCREMENT;
 		}
 	}
 	output.close();
@@ -200,13 +238,16 @@ void Leaderboard::Save()
 void Leaderboard::FillDefault()
 {
 	// fill each leaderboard entry with placeholder data
-	for (int e = 0; e < MAX_ENTRIES; e++)
+	for (int p = 0; p < NUM_LEADERBOARDS; p++)
 	{
-		for (int c = 0; c < MAX_NAME_SIZE; c++) 
+		for (int e = 0; e < MAX_ENTRIES; e++)
 		{
-			Entries[e].name[c] = 'A' + e;
+			for (int c = 0; c < MAX_NAME_SIZE; c++)
+			{
+				Entries[p][e].name[c] = 'A' + e;
+			}
+			Entries[p][e].name[MAX_NAME_SIZE] = '\0';
+			Entries[p][e].score = (MAX_ENTRIES - e) * 100;
 		}
-		Entries[e].name[MAX_NAME_SIZE] = '\0';
-		Entries[e].score = (MAX_ENTRIES - e) * 100;
 	}
 }
