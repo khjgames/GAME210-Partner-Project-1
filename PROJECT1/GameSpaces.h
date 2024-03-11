@@ -20,7 +20,7 @@ namespace GameVars {
     long long TimePlayed = 0;
     int MenuTime = 0;
     short NumPlayers = 1;
-    short VoidBits = 0;
+    short VoidBits = 2; // free void bits! so generous!
     short SpriteInt = 0;
     short SpriteIntMax = 200; // Sprite animation interval
     int LastTick;

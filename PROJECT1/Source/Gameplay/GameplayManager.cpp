@@ -467,8 +467,12 @@ void GameplayManager::DrawMenu() {
 		Graphics::DrawText(lbtext.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 460, lbtext.size() * 18, 44, ArialFont);
 	}
 	else {
-		Graphics::DrawText(ExitShopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 475, ExitShopBtnString.size() * 18, 44, ArialFont);
-		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 475, ExitShopBtnString.size() * 18, 44) == true) {
+
+		string ShopHint = "Earn VoidBits from UFOs & Levels! Higher the better!";
+		Graphics::DrawText(ShopHint.c_str(), Graphics::WINDOW_WIDTH/2 - ShopHint.size() * 5.325, 110, ShopHint.size() * 10, 25, ArialFont);
+
+		Graphics::DrawText(ExitShopBtnString.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 500, ExitShopBtnString.size() * 18, 44, ArialFont);
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * ExitShopBtnString.size(), 500, ExitShopBtnString.size() * 18, 44) == true) {
 			ExitShopBtnString = "> Exit Shop <";
 			if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true) {
 				AtShop = false;
@@ -483,9 +487,9 @@ void GameplayManager::DrawMenu() {
 			//
 			if (u < MaxUpgrades[i]) { // If any more can be purchased
 				ShopUpgradeString = UpgradeNames[i] + " " + to_string(u) + " [" + to_string(UpgCost) + "]";
-				Graphics::DrawText(ShopBuyStrings[i].c_str(), Graphics::WINDOW_WIDTH / 2 + 75 - ShopBuyStrings[i].size() * 9, 133 + 80 * i, ShopBuyStrings[i].size() * 18, 44, ArialFont);
+				Graphics::DrawText(ShopBuyStrings[i].c_str(), Graphics::WINDOW_WIDTH / 2 + 75 - ShopBuyStrings[i].size() * 9, 160 + 80 * i, ShopBuyStrings[i].size() * 18, 44, ArialFont);
 				//
-				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 75 - ShopBuyStrings[i].size() * 9, 133 + 80 * i, ShopBuyStrings[i].size() * 18, 44) == true) {
+				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 75 - ShopBuyStrings[i].size() * 9, 160 + 80 * i, ShopBuyStrings[i].size() * 18, 44) == true) {
 					ShopBuyStrings[i] = "> Buy <";
 					if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true && VoidBits >= UpgCost) {
 						VoidBits -= UpgCost;
@@ -497,12 +501,12 @@ void GameplayManager::DrawMenu() {
 				else ShopBuyStrings[i] = "Buy";
 			}
 			//
-			Graphics::DrawText(ShopUpgradeString.c_str(), Graphics::WINDOW_WIDTH / 3 + 50 - 9 * ShopUpgradeString.size(), 133 + 80 * i, ShopUpgradeString.size() * 18, 44, ArialFont);
+			Graphics::DrawText(ShopUpgradeString.c_str(), Graphics::WINDOW_WIDTH / 3 + 50 - 9 * ShopUpgradeString.size(), 160 + 80 * i, ShopUpgradeString.size() * 18, 44, ArialFont);
 			//
 			if (u > 0) { // If any can be refunded
-				Graphics::DrawText(ShopRefundStrings[i].c_str(), Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 133 + 80 * i, ShopRefundStrings[i].size() * 18, 44, ArialFont);
+				Graphics::DrawText(ShopRefundStrings[i].c_str(), Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 160 + 80 * i, ShopRefundStrings[i].size() * 18, 44, ArialFont);
 				//
-				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 133 + 80 * i, ShopRefundStrings[i].size() * 18, 44) == true) {
+				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 160 + 80 * i, ShopRefundStrings[i].size() * 18, 44) == true) {
 					ShopRefundStrings[i] = "> Refund <";
 					if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true) {
 						VoidBits += floor(((UpgradeCosts[(u - 1)] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.8);
