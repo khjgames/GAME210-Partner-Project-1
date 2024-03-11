@@ -465,6 +465,15 @@ void GameplayManager::DrawMenu() {
 			}
 		}
 		Graphics::DrawText(lbtext.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * lbtext.size(), 460, lbtext.size() * 18, 44, ArialFont);
+
+		string quit = "Quit";
+		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * quit.size(), 530, quit.size() * 18, 44) == true) {
+			quit = "> Quit <";
+			if (EventHandler::MClicked(1) == true) {
+				run = false;
+			}
+		}
+		Graphics::DrawText(quit.c_str(), Graphics::WINDOW_WIDTH / 2 - 9 * quit.size(), 540, quit.size() * 18, 44, ArialFont);
 	}
 	else {
 
