@@ -39,6 +39,8 @@ void GameplayManager::InitGameObjects(){
 	AddGameObject(Graphics::WINDOW_WIDTH / 2 + 119, Graphics::WINDOW_HEIGHT - 90, GameObject::ObjectTypes::PLAYER_2, true);
 	AddGameObject(Graphics::WINDOW_WIDTH / 2 - 19, Graphics::WINDOW_HEIGHT - 150, GameObject::ObjectTypes::PLAYER_1_PROJECTILE, false);
 	AddGameObject(Graphics::WINDOW_WIDTH / 2 + 119, Graphics::WINDOW_HEIGHT - 150, GameObject::ObjectTypes::PLAYER_2_PROJECTILE, false);
+	AddGameObject(Graphics::WINDOW_WIDTH, Graphics::WINDOW_HEIGHT / 4 - 104, GameObject::ObjectTypes::UFO, false);
+
 }
 
 void GameplayManager::LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS){
@@ -130,6 +132,16 @@ void HandleInvader(GameObject* InvaderGameObject, GameObject* Player1Proj, GameO
 	}
 }
 
+void HandleUFO(GameObject* UFOGameObject, GameObject* Player1Proj, GameObject* Player2Proj) {
+	UFOGameObject->transform.x -= 2+InvaderSpeed;
+	if ((Player1Proj->visible == true) && ObjectsCollide(UFOGameObject, Player1Proj)) {
+		Player1Proj->visible = false; UFOGameObject->visible = false; Score += 100;
+	}
+	if ((Player2Proj->visible == true) && ObjectsCollide(UFOGameObject, Player2Proj)) {
+		Player2Proj->visible = false; UFOGameObject->visible = false; Score += 100;
+	}
+}
+
 void ToggleNumPlayers(GameObject* FirstGameObject){
 	NumPlayers = (NumPlayers == 1) ? 2 : 1;
 	GameObject* CurGameObject = FirstGameObject;
@@ -209,6 +221,9 @@ void GameplayManager::Update(){
 			}
 			break;
 		case GameObject::ObjectTypes::UFO:
+			if (CurGameObject->visible == true){
+				HandleUFO(CurGameObject, Player1Proj, Player2Proj);
+			}
 			break;
 		case GameObject::ObjectTypes::PLAYER_1_PROJECTILE:
 			Player1Proj = CurGameObject;
@@ -262,6 +277,12 @@ void GameplayManager::Update(){
 					if (ReachedEdge == true) CurGameObject->transform.y += DistPerAdvance;
 				}
 				break;
+			case GameObject::ObjectTypes::UFO:
+				if (SpawnedUFOs < Level && LivingInvaders >= 23 && LivingInvaders <= 32){
+					SpawnedUFOs++; 
+					CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
+					CurGameObject->visible = true;
+				}
 			}
 			//
 			if (NextGameObject == nullptr) break; // we reached the last object

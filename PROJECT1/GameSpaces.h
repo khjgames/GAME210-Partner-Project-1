@@ -22,6 +22,7 @@ namespace GameVars {
     int LastTick;
     short Level;              // Current stage / level
     int Score;                // Current score
+    short SpawnedUFOs;
     short InvaderSpeed;       // Invader pixels per tick towards edge
     short DistPerAdvance;     // Pixels down to move after reach edge
     short AccelPerAdvance;    // InvaderSpeed increase after reach edge
@@ -45,6 +46,7 @@ namespace GameVars {
         GameOver = 0;
         Level = 1;
         Score = 0;
+        SpawnedUFOs = 0;
         InvaderSpeed = 1;
         DistPerAdvance = 30;
         AccelPerAdvance = 0.5;
