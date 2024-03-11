@@ -509,7 +509,7 @@ void GameplayManager::DrawScore(){
 	string LevelString = "Level: " + to_string(Level);
 	Graphics::DrawText(LevelString.c_str(), 300, 20, LevelString.size() * 15, 40, ArialFont);
 
-	string HighScoreString = "High Score: " + to_string(lb.GetEntry(0).score);
+	string HighScoreString = "High Score: " + to_string(lb.GetEntry(0, NumPlayers - 1).score);
 	Graphics::DrawText(HighScoreString.c_str(), 50, 60, HighScoreString.size() * 10, 25, ArialFont);
 
 	if (GameOver >= 1) {
