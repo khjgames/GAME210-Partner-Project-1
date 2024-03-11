@@ -377,6 +377,11 @@ void GameplayManager::DrawMenu() {
 	Graphics::DrawText(TitleString.c_str(), Graphics::WINDOW_WIDTH / 2 - 15 * TitleString.size(), 30, TitleString.size() * 30, 70, ArialFont);
 	//
 	if (AtShop == false) {
+		string p1Controls = "Player 1: W & D to Move, Space to Shoot";
+		string p2Controls = "Player 2: < & > to Move, KP0 to Shoot";
+		Graphics::DrawText(p1Controls.c_str(), 50, Graphics::WINDOW_HEIGHT - 170, p1Controls.size() * 10, 30, ArialFont);
+		Graphics::DrawText(p2Controls.c_str(), Graphics::WINDOW_WIDTH - 50 - p1Controls.size() * 10, Graphics::WINDOW_HEIGHT - 170, p1Controls.size() * 10, 30, ArialFont);
+
 		if (MouseInRect(Graphics::WINDOW_WIDTH / 2 - 9 * CoopBtnString.size(), 145, CoopBtnString.size() * 18, 44) == true) {
 			CoopBtnString = "> Players: " + to_string(NumPlayers) + "P <";
 			if (EventHandler::MClicked(1) == true) ToggleNumPlayers(FirstGameObject);

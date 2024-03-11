@@ -37,7 +37,7 @@ namespace GameVars {
     short GameOver = 0;
     bool ViewingLeaderboard = false;
     short ScorePlaced = 0;
-    string PlayerName = "AAA";
+    string PlayerName = "NAME";
     string NameEntry = "PlayerName: ";
     string NameEdit = "";
     string StartBtnString = "Start Game";
