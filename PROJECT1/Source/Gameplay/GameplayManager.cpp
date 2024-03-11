@@ -57,8 +57,8 @@ void GameplayManager::Init(){
 	GameSprites::LoadSprites();
 	DeleteGameObjects();
 	InitGameObjects();
-	InitGameVars();		// Reset and init a bunch of game vars
 	LoadGame();
+	InitGameVars();		// Reset and init a bunch of game vars
 } 
 
 
