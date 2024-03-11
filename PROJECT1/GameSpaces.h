@@ -18,6 +18,7 @@ namespace GameTime {
 namespace GameVars {
     //
     long long TimePlayed = 0;
+    int MenuTime = 0;
     short NumPlayers = 1;
     short VoidBits = 0;
     short SpriteInt = 0;

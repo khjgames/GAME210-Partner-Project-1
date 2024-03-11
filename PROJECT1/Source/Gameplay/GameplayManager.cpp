@@ -146,17 +146,19 @@ void HandleUFO(GameObject* UFOGameObject, GameObject* Player1Proj, GameObject* P
 	UFOGameObject->transform.x -= UFOSpeed;
 	if ((Player1Proj->visible == true) && ObjectsCollide(UFOGameObject, Player1Proj)) {
 		Player1Proj->visible = false; UFOGameObject->visible = false; 
-		if (OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
+		if (AtMenu == false && OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
 			Score += 50; VoidBits += floor(Level*1.5);
 		}
-		Score += 100; VoidBits += 2 + floor(Level * 1.5);
+		if (AtMenu == false) Score += 100; 
+		VoidBits += 2 + floor(Level * 1.5);
 	}
 	if ((Player2Proj->visible == true) && ObjectsCollide(UFOGameObject, Player2Proj)) {
 		Player2Proj->visible = false; UFOGameObject->visible = false; 
-		if (OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
+		if (AtMenu == false && OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
 			Score += 50; VoidBits += floor(Level * 1.5);
 		}
-		Score += 100; VoidBits += 2 + floor(Level * 1.5);
+		if (AtMenu == false) Score += 100;
+		VoidBits += 2 + floor(Level * 1.5);
 	}
 }
 
@@ -242,6 +244,13 @@ void GameplayManager::Update(){
 			case GameObject::ObjectTypes::UFO:
 				if (CurGameObject->visible == true) {
 					HandleUFO(CurGameObject, Player1Proj, Player2Proj);
+				}
+				if (AtMenu == true) {
+					MenuTime += dif(tick(), LastTick);
+					if (MenuTime > 60 * 1000) { MenuTime = 0; // 60 seconds
+						CurGameObject->transform.x = Graphics::WINDOW_WIDTH;
+						CurGameObject->visible = true;
+					}
 				}
 				break;
 			case GameObject::ObjectTypes::PLAYER_1_PROJECTILE:
