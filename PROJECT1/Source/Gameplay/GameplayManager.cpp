@@ -57,6 +57,8 @@ void GameplayManager::Init(){
 	InitGameObjects();
 	InitGameVars();		// Reset and init a bunch of game vars
 } 
+
+
 // 11x4 space invaders
 // + 1 ship
 // + 1 ufo
@@ -417,6 +419,9 @@ void GameplayManager::DrawScore(){
 				buttonText = "> BACK TO MENU <";
 				if (EventHandler::MClicked(1) == true) {
 					AtMenu = true;
+					DeleteGameObjects();
+					InitGameObjects();
+					InitGameVars();		// Reset and init a bunch of game vars
 				}
 			}
 			Graphics::DrawText(buttonText.c_str(),
