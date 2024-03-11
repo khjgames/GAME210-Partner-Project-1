@@ -121,7 +121,7 @@ LBEntry Leaderboard::GetEntry(int index)
 	return Entries[index];
 }
 
-void Leaderboard::AddEntry(const char* name, int score)
+short Leaderboard::AddEntry(const char* name, int score)
 {
 	// compare the score passed in to the entries in the leaderboard from bottom to top
 	int placement = MAX_ENTRIES;
@@ -148,6 +148,9 @@ void Leaderboard::AddEntry(const char* name, int score)
 		// insert score into new entry
 		Entries[placement].score = score;
 	}
+	short place = (placement > MAX_ENTRIES) ? 0 : placement + 1; // return first through tenth place, or 0 if not placed
+
+	return place;
 }
 
 bool Leaderboard::IsWorthy(int score)

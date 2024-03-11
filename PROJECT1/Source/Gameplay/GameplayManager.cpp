@@ -78,7 +78,7 @@ void MoveProjectile(GameObject* ProjGameObject) {
 
 void ManageProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject) {
 	MoveProjectile(ProjGameObject);
-	if (GameOver == false) { // Can't shoot on GameOver
+	if (GameOver == 0) { // Can't shoot on GameOver
 		switch (ProjGameObject->type) {
 		case GameObject::ObjectTypes::PLAYER_1_PROJECTILE: {
 			if (EventHandler::events[GameEvents::SPACE_PRESSED] == true) { SpawnProjectile(ProjGameObject, PlayerGameObject); }
@@ -201,8 +201,8 @@ void GameplayManager::Update(){
 					MaxX_W = CurGameObject->transform.w;
 				}
 				LivingInvaders++;
-				if (GameOver == false){
-					if (CurGameObject->transform.y + CurGameObject->transform.h >= FirstGameObject->transform.y) GameOver = true;
+				if (GameOver == 0){
+					if (CurGameObject->transform.y + CurGameObject->transform.h >= FirstGameObject->transform.y) GameOver = 1;
 				}
 			}
 			break;
@@ -295,6 +295,12 @@ void GameplayManager::Update(){
 	}
 	// ------------ ||
 
+	if (GameOver == 1){
+		if (Player1Proj != nullptr && Player2Proj != nullptr && Player1Proj->visible == false && Player2Proj->visible == false) {
+			GameOver = 2;
+		}
+	}
+	//
 	LastTick = tick();
 }
 
@@ -385,9 +391,38 @@ void GameplayManager::DrawScore(){
 	string LevelString = "Level: " + to_string(Level);
 	Graphics::DrawText(LevelString.c_str(), 450, 20, LevelString.size() * 20, 50, ArialFont);
 
-	if (GameOver == true) {
+	if (GameOver >= 1) {
 		string GameOverString = "GAME OVER.";
 		Graphics::DrawText(GameOverString.c_str(), Graphics::WINDOW_WIDTH / 2 - 18 * GameOverString.size(), 110, GameOverString.size() * 36, 80, ArialFont);
+		if (GameOver == 2) { 
+			GameOver = 3;
+			ScorePlaced = lb.AddEntry(PlayerName.c_str(), Score);
+		}
+		if (GameOver >= 3){
+			string PlaceGrammar = "th";
+			if (ScorePlaced > 0) {
+				switch (ScorePlaced){
+				case 1: PlaceGrammar = "st"; break;
+				case 2: PlaceGrammar = "nd"; break;
+				case 3: PlaceGrammar = "rd"; break;
+				}
+				string ScorePlaceString = "New " + to_string(ScorePlaced) + PlaceGrammar + " place score!";
+				Graphics::DrawText(ScorePlaceString.c_str(), Graphics::WINDOW_WIDTH / 2 - 10 * ScorePlaceString.size(), 200, ScorePlaceString.size() * 20, 50, ArialFont);
+			}
+
+			string buttonText = "BACK TO MENU";
+			if (MouseInRect(
+				Graphics::WINDOW_WIDTH / 2 - buttonText.size() * 20 / 2, Graphics::WINDOW_HEIGHT - 175
+				- 35, buttonText.size() * 20, 35) == true) {
+				buttonText = "> BACK TO MENU <";
+				if (EventHandler::MClicked(1) == true) {
+					AtMenu = true;
+				}
+			}
+			Graphics::DrawText(buttonText.c_str(),
+				Graphics::WINDOW_WIDTH / 2 - buttonText.size() * 20 / 2, Graphics::WINDOW_HEIGHT - 175
+				- 35, buttonText.size() * 20, 35, ArialFont);
+		}
 	}
 }
 

@@ -26,7 +26,7 @@ public:
 	~Leaderboard() {};
 
 	LBEntry GetEntry(int index);
-	void AddEntry(const char* name, int score);
+	short AddEntry(const char* name, int score);
 	bool IsWorthy(int score);
 	void Save();
 

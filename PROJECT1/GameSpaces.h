@@ -29,8 +29,9 @@ namespace GameVars {
     short LowSurvivors;       // Below x survivors earns that bonus 
     bool AdvancingLeft;
     bool AtMenu = true;
-    bool GameOver = false;
+    short GameOver = 0;
     bool ViewingLeaderboard = false;
+    short ScorePlaced = 0;
     string PlayerName = "AAA";
     string NameEntry = "PlayerName: ";
     string NameEdit = "";
@@ -41,6 +42,7 @@ namespace GameVars {
     const short TYPESET_SIZE = 46;
     //
     void InitGameVars() {
+        GameOver = 0;
         Level = 1;
         Score = 0;
         InvaderSpeed = 1;

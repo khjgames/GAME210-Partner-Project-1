@@ -24,7 +24,7 @@ private:
 
 	GameObject* AddGameObject(short x, short y, short type, bool visible);
 
-	Leaderboard lb = Leaderboard("");
+	Leaderboard lb = Leaderboard("SaveData.txt");
 
 	int LastSpriteAnim;
 	void Init(); 
