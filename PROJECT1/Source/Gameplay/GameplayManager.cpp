@@ -399,6 +399,7 @@ void GameplayManager::DrawScore(){
 		if (GameOver == 2) { 
 			GameOver = 3;
 			ScorePlaced = lb.AddEntry(PlayerName.c_str(), Score);
+			lb.Save();
 		}
 		if (GameOver >= 3){
 			string PlaceGrammar = "th";
