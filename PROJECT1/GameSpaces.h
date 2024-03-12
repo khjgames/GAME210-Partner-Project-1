@@ -34,7 +34,7 @@ namespace GameVars {
     short AdvanceCd = 0;      // Increases invader speed by 1 per 1 raised
     short AccelLowSurvivors;  // InvaderSpeed bonus per GEAR
     short LowSurvivors;       // Below x survivors earns that bonus 
-    const short INVADER_GEAR_SPEEDS = 8; // Number speed tier increases below Low Survivors
+    const short INVADER_GEAR_SPEEDS = 7; // Number speed tier increases below Low Survivors
     bool AdvancingLeft;
     bool AtMenu = true;
     bool AtShop = false;
@@ -62,16 +62,16 @@ namespace GameVars {
     //
     short ShipSpeed = 3 + OwnedUpgrades[0];
     short ProjectileSpeed = 5;
-    short ProjSizeX = 5;
-    short ProjSizeY = 7;
+    short ProjSizeX = 6;
+    short ProjSizeY = 8;
     //
     void ApplyUpgrades() {
         ShipSpeed = 3 + floor(OwnedUpgrades[0] * 1.25);
-        ProjectileSpeed = 5 + floor(OwnedUpgrades[1] * 1.7);
-        ProjSizeX = floor(5 * pow(1.2, OwnedUpgrades[2]));
-        ProjSizeX = ProjSizeX + min((short) 2, OwnedUpgrades[2]); // ^ Increases early
+        ProjectileSpeed = 6 + floor(OwnedUpgrades[1] * 1.7);
+        ProjSizeX = floor(6 * pow(1.2, OwnedUpgrades[2]));
+        ProjSizeX = ProjSizeX + min(4, OwnedUpgrades[2]*2); // ^ Increases early
         // level scaling without affecting late game by more than 2 pixels
-        ProjSizeY = floor(ProjSizeX * 7 / 5);
+        ProjSizeY = floor(ProjSizeX * 8 / 6);
     };
     //
     void InitGameVars() {

@@ -78,8 +78,8 @@ void SpawnProjectile(GameObject* ProjGameObject, GameObject* PlayerGameObject){
 
 void MoveProjectile(GameObject* ProjGameObject) {
 	if (ProjGameObject->visible == true) { // Projectile fly and explode
-		ProjGameObject->transform.y = max(75, ProjGameObject->transform.y - ProjectileSpeed);
-		if (ProjGameObject->transform.y == 75) ProjGameObject->visible = false;
+		ProjGameObject->transform.y = max(35, ProjGameObject->transform.y - ProjectileSpeed);
+		if (ProjGameObject->transform.y == 35) ProjGameObject->visible = false;
 	}
 }
 
@@ -147,18 +147,18 @@ void HandleUFO(GameObject* UFOGameObject, GameObject* Player1Proj, GameObject* P
 	if ((Player1Proj->visible == true) && ObjectsCollide(UFOGameObject, Player1Proj)) {
 		Player1Proj->visible = false; UFOGameObject->visible = false; 
 		if (AtMenu == false && OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
-			Score += 50; VoidBits += floor(Level*1.5);
+			Score += 50; VoidBits += floor(Level* 1.68);
 		}
 		if (AtMenu == false) Score += 100; 
-		VoidBits += 2 + floor(Level * 1.5);
+		VoidBits += 2 + floor(Level * 1.68);
 	}
 	if ((Player2Proj->visible == true) && ObjectsCollide(UFOGameObject, Player2Proj)) {
 		Player2Proj->visible = false; UFOGameObject->visible = false; 
 		if (AtMenu == false && OwnedUpgrades[3] > 3) { //UFO Study Tier 3 upgrade
-			Score += 50; VoidBits += floor(Level * 1.5);
+			Score += 50; VoidBits += floor(Level * 1.68);
 		}
 		if (AtMenu == false) Score += 100;
-		VoidBits += 2 + floor(Level * 1.5);
+		VoidBits += 2 + floor(Level * 1.68);
 	}
 }
 
@@ -331,23 +331,21 @@ void GameplayManager::Update(){
 		}
 		else {
 			if (AtMenu == false) { // You beat the current level
-				Level++; VoidBits += floor(Level * 1.5);
-				short NumInvade = 10;
-				short NumWaves = 6 + floor(Level / 4);
-				if (Level % 2 == 0) NumInvade = 11; 
-				if (Level % 4 == 1) {
-					InvaderSpeed = min((short) (InvaderSpeed+1), (short) 4);
+				Level++; VoidBits++; VoidBits += floor(Level * 1.68);
+				short NumInvade = 9 + min((short)floor(Level/15),(short)3);
+				short NumWaves = 6 + floor(Level / 4.5);
+				if (Level % 2 == 0) NumInvade = 10; 
+				if (Level % 5 == 1) {
+					if (Level > 6) InvaderSpeed = min((short) (InvaderSpeed+1), (short) 4);
 					LowSurvivors++;
 				}
 				if (Level % 3 == 0) {
-					LowSurvivors++; NumInvade = 12;
-				}
-				if (Level % 5 == 0) {
+					if (Level > 6) NumInvade = 11;
 					LowSurvivors++; 
 				}
 				if (Level % 4 == 0) {
 					LowSurvivors++; AccelLowSurvivors++; 
-					AccelPerAdvance = min(AccelPerAdvance + 0.08f, 0.667f); // wave 38ish
+					AccelPerAdvance = min(AccelPerAdvance + 0.06f, 0.667f); 
 				}
 				LoadLevel(52, 52, NumInvade, NumWaves); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 			}
@@ -445,7 +443,7 @@ void GameplayManager::DrawMenu() {
 			StartBtnString = "> Start Game <";
 			if (EventHandler::MClicked(1) == true && AtMenu == true) {
 				AtMenu = false;
-				LoadLevel(52, 52, 13, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
+				LoadLevel(52, 52, 8, 6); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 			}
 		}
 		else StartBtnString = "Start Game";
@@ -494,7 +492,7 @@ void GameplayManager::DrawMenu() {
 
 		for (short i = 0; i < SHOP_UPGRADES; i++){
 			short u = OwnedUpgrades[i];
-			short UpgCost = floor(((UpgradeCosts[u] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.8);
+			short UpgCost = floor(((UpgradeCosts[u] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.7);
 			string ShopUpgradeString = UpgradeNames[i] + " " + to_string(u) + " [MAXXED]";
 			//
 			if (u < MaxUpgrades[i]) { // If any more can be purchased
@@ -521,7 +519,7 @@ void GameplayManager::DrawMenu() {
 				if (MouseInRect(Graphics::WINDOW_WIDTH / 2 + 240 - ShopRefundStrings[i].size() * 9, 160 + 80 * i, ShopRefundStrings[i].size() * 18, 44) == true) {
 					ShopRefundStrings[i] = "> Refund <";
 					if (EventHandler::MClicked(1) == true && AtMenu == true && AtShop == true) {
-						VoidBits += floor(((UpgradeCosts[(u - 1)] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.8);
+						VoidBits += floor(((UpgradeCosts[(u - 1)] + (10 * i)) * (1 + ((float)i / 10.0f))) * 0.7);
 						OwnedUpgrades[i]--;
 						ApplyUpgrades();
 						SaveGame();
