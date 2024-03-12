@@ -48,7 +48,7 @@ void GameplayManager::InitGameObjects(){
 void GameplayManager::LoadLevel(short X_GAP, short Y_GAP, short PER_ROW, short NUM_ROWS){
 	for (int a = 0; a < (PER_ROW); a++) {
 		for (int b = 0; b < NUM_ROWS; b++) {
-			AddGameObject(Graphics::WINDOW_WIDTH / 2 - 16 - (PER_ROW / 2 - a) * X_GAP, Graphics::WINDOW_HEIGHT / 4 - ((2 - b) * Y_GAP), 2 + (b / 2 % 3 * 2), true);
+			AddGameObject(Graphics::WINDOW_WIDTH / 2 - 16 - (PER_ROW / 2 - a) * X_GAP, Graphics::WINDOW_HEIGHT / 4 - (((2+max(0,NUM_ROWS-6)) - b) * Y_GAP), 2 + (b / 2 % 3 * 2), true);
 		}
 	}
 }
@@ -269,8 +269,8 @@ void GameplayManager::Update(){
 		//
 		if (LivingInvaders > 0) {
 			//
-			for (int i = 1; i < LowSurvivors; i++) { // Move faster the fewer survivors < LowSurvivors there are.
-				if (LivingInvaders <= i) AdvanceAmount += AccelLowSurvivors;
+			for (int i = 1; i < min(LowSurvivors, INVADER_GEAR_SPEEDS); i++) { // Move faster the fewer survivors < LowSurvivors there are.
+				if (LivingInvaders <= (i + max(0, LowSurvivors - INVADER_GEAR_SPEEDS))) AdvanceAmount += AccelLowSurvivors;
 			}
 			//
 			if (AdvancingLeft == true) {
@@ -323,7 +323,8 @@ void GameplayManager::Update(){
 			}
 			//
 			if (ReachedEdge == true) {
-				InvaderSpeed += AccelPerAdvance;
+				AdvanceCd += AccelPerAdvance;
+				if (AdvanceCd >= 1) { AdvanceCd -= 1; InvaderSpeed++; }
 				AdvancingLeft = !AdvancingLeft;
 			}
 			//
@@ -331,20 +332,22 @@ void GameplayManager::Update(){
 		else {
 			if (AtMenu == false) { // You beat the current level
 				Level++; VoidBits += floor(Level * 1.5);
-				short NumInvade = 11;
+				short NumInvade = 10;
 				short NumWaves = 6 + floor(Level / 4);
-				if (Level % 2 == 0) NumInvade = 12;
+				if (Level % 2 == 0) NumInvade = 11; 
 				if (Level % 4 == 1) {
-					InvaderSpeed++;
+					InvaderSpeed = min((short) (InvaderSpeed+1), (short) 4);
+					LowSurvivors++;
 				}
 				if (Level % 3 == 0) {
-					LowSurvivors++; NumInvade = 13;
+					LowSurvivors++; NumInvade = 12;
 				}
-				if (Level % 6 == 0) {
-					AccelLowSurvivors++;
+				if (Level % 5 == 0) {
+					LowSurvivors++; 
 				}
-				if (Level % 3 == 1) {
-					AccelPerAdvance += 0.5;
+				if (Level % 4 == 0) {
+					LowSurvivors++; AccelLowSurvivors++; 
+					AccelPerAdvance = min(AccelPerAdvance + 0.08f, 0.667f); // wave 38ish
 				}
 				LoadLevel(52, 52, NumInvade, NumWaves); // Load in enemy invaders also load in time, and score, when you resume a level resume from the start of the level you left off on.
 			}

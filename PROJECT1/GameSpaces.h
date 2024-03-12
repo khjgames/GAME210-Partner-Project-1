@@ -30,9 +30,11 @@ namespace GameVars {
     short ExtraSpawnedUFOs;
     short InvaderSpeed;       // Invader pixels per tick towards edge
     short DistPerAdvance;     // Pixels down to move after reach edge
-    short AccelPerAdvance;    // InvaderSpeed increase after reach edge
-    short AccelLowSurvivors;  // InvaderSpeed bonus per low survivor
+    float AccelPerAdvance;    // AdvanceCd increase after reach edge
+    short AdvanceCd = 0;      // Increases invader speed by 1 per 1 raised
+    short AccelLowSurvivors;  // InvaderSpeed bonus per GEAR
     short LowSurvivors;       // Below x survivors earns that bonus 
+    const short INVADER_GEAR_SPEEDS = 8; // Number speed tier increases below Low Survivors
     bool AdvancingLeft;
     bool AtMenu = true;
     bool AtShop = false;
@@ -51,9 +53,9 @@ namespace GameVars {
     const short TYPESET_SIZE = 46;
     //
     const short SHOP_UPGRADES = 4;
-    short MaxUpgrades[SHOP_UPGRADES] = { 6, 7, 6, 4 };
+    short MaxUpgrades[SHOP_UPGRADES] = { 7, 8, 7, 4 };
     short OwnedUpgrades[SHOP_UPGRADES] = { 0, 0, 0, 0 };
-    short UpgradeCosts[7] = { 15, 35, 75, 125, 185, 250, 250 };
+    short UpgradeCosts[8] = { 15, 35, 75, 125, 185, 250, 250, 350 };
     string UpgradeNames[SHOP_UPGRADES] = {"Ship Speed","Faster Shots","Missile Size","Study UFO"};
     string ShopBuyStrings[SHOP_UPGRADES] = {"Buy","Buy","Buy","Buy"};
     string ShopRefundStrings[SHOP_UPGRADES] = {"Refund","Refund", "Refund","Refund"};
@@ -80,7 +82,8 @@ namespace GameVars {
         ExtraSpawnedUFOs = 0;
         InvaderSpeed = 1;
         DistPerAdvance = 30;
-        AccelPerAdvance = 0.5;
+        AccelPerAdvance = 0.05f;
+        AdvanceCd = 0;
         AccelLowSurvivors = 1;
         LowSurvivors = 6;
         AdvancingLeft = true;
